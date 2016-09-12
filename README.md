@@ -4,4 +4,4 @@
 
 Pär Eriksson (pe222gq) and Oskar Emilsson (oe222ca).
 
-![workshop-1.png]
+![UML Domain Model](workshop-1.png)
