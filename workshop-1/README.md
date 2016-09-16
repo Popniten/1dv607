@@ -1,6 +1,6 @@
 # 1dv607 Workshop 1 - Domain Modeling
 
-## Submission 1
+## Submission 1 - Grade 2
 
 Pär Eriksson (pe222gq) and Oskar Emilsson (oe222ca).
 
