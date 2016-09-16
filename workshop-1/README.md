@@ -1,7 +1,14 @@
-# 1dv607
+# 1dv607 Workshop 1 - Domain Modeling
 
-## Workshop 1 - Submission 1
+## Submission 1
 
 Pär Eriksson (pe222gq) and Oskar Emilsson (oe222ca).
 
 ![UML Domain Model](workshop-1.png)
+
+## Final submission
+
+Thoughts on changes here
+
+Final domain model here
+
