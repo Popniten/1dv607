@@ -1,6 +1,16 @@
-<?import javafx.scene.layout.StackPane?>
-<StackPane prefHeight="150.0" prefWidth="200.0" xmlns:fx="http://javafx.com/fxml" fx:controller="sample.Controller">
-<children>
-    <fx:include source="Button.fxml" fx:id="myButton" />
-</children>
-</StackPane>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
+<TabPane
+    prefHeight="150.0"
+    prefWidth="200.0"
+    xmlns:fx="http://javafx.com/fxml"
+    fx:controller="sample.Controller"
+    tabClosingPolicy="UNAVAILABLE"
+>
+<tabs>
+    <Tab text="Button">
+        <fx:include source="Button.fxml" fx:id="myButton" />
+    </Tab>
+    <Tab text="Empty"></Tab>
+</tabs>
+</TabPane>
