@@ -1,17 +1,11 @@
-import java.sql.*;
+import controller.DBController;
 
 public class Main
 {
     public static void main( String args[] )
     {
-        Connection c = null;
-        try {
-            Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:src/data/MemberRegistry.db");
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            System.exit(0);
-        }
-        System.out.println("Opened database successfully...");
+        String sql = "INSERT INTO Member (firstname, lastname, ssn) VALUES ('test', 'testson', 9999)";
+        DBController db = new DBController();
+        db.runCommand(sql);
     }
 }
