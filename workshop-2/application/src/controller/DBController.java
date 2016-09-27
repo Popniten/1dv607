@@ -1,21 +1,45 @@
 package controller;
+
 import java.sql.*;
 
 public class DBController {
     private Connection c = null;
+    private Statement stmt = null;
 
-    public void runCommand(String sql) {
+    public ResultSet selectFromDatabase(String sql) {
+        ResultSet result = null;
         this.connectToDatabase();
 
         try {
-            Statement stmt = this.c.createStatement();
-            stmt.executeUpdate(sql);
-            stmt.close();
+            this.stmt = this.c.createStatement();
+            result = stmt.executeQuery(sql);
+
+
+            //stmt.close();
+            return result;
         } catch(Exception e) {
             e.printStackTrace();
         }
 
-        this.closeDatabaseConnection();
+        //this.closeDatabaseConnection();
+        return result;
+    }
+
+    public boolean updateDatabase(String sql) {
+        this.connectToDatabase();
+
+        try {
+            this.stmt = this.c.createStatement();
+            stmt.executeUpdate(sql);
+
+            //stmt.close();
+            return true;
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        //this.closeDatabaseConnection();
+        return false;
     }
 
     private boolean connectToDatabase() {
@@ -32,6 +56,7 @@ public class DBController {
         if (this.c != null) {
             try {
                 //this.c.commit();
+                this.stmt.close();
                 this.c.close();
             } catch (SQLException e) {
                 e.printStackTrace();
