@@ -43,10 +43,13 @@ public class DBController {
     }
 
     private boolean connectToDatabase() {
+        System.out.println("connection...");
         try {
             Class.forName("org.sqlite.JDBC");
-            this.c = DriverManager.getConnection("jdbc:sqlite:src/data/MemberRegistry.db");
+            this.c = DriverManager.getConnection("jdbc:sqlite:data/MemberRegistry.db");
         } catch ( Exception e ) {
+            System.out.println("WOOPSIE");
+            e.printStackTrace();
             return false;
         }
         return true;
