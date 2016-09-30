@@ -33,6 +33,10 @@ public class Registry {
         //done with fetches, close dbconnection
         this.db.closeDatabaseConnection();
 
+        return isMember(ssn);
+    }
+
+    private boolean isMember(String ssn) {
         if (this.getMembers().size() > 0) {
             return true;
         } else {
@@ -88,11 +92,21 @@ public class Registry {
     }
 
     public String updateMember(Member mem) {
-        return this.db.updateDatabase(this.db.getMemberQuery("update", mem));
+        if (isMember(mem.getSSN())) {
+            return this.db.updateDatabase(this.db.getMemberQuery("update", mem));
+        }
+        else {
+            return null;
+        }
     }
 
     public String removeMember(Member mem) {
-        return this.db.updateDatabase(this.db.getMemberQuery("delete", mem));
+        if (isMember(mem.getSSN())) {
+            return this.db.updateDatabase(this.db.getMemberQuery("delete", mem));
+        }
+        else {
+            return null;
+        }
     }
 
     /*
