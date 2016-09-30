@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,42 +12,34 @@ public class Member {
     private String firstname;
     private String lastname;
     private String SSN;
-    //private String SQLQuery;
+    private ArrayList<Boat> boats;
 
     public Member(String firstname, String lastname, String SSN) {
+        this.boats = new ArrayList<>();
         setFirstname(firstname);
         setLastname(lastname);
         setSSN(SSN);
     }
 
-    public String toString() {
-        return this.getSSN() + ": " + this.getFirstname() + " " + this.getLastname();
+    /*copy constructor*/
+    public Member(Member that) {
+        this.boats = that.getBoats();
+        this.setLastname(that.getLastname());
+        this.setFirstname(that.getFirstname());
+        this.setSSN(that.getSSN());
     }
 
-    public String getSQLQuery(String command) {
-        String sql = "";
-        switch(command) {
-            case "insert":
-                 sql = "INSERT INTO Member (firstname, lastname, ssn) VALUES " +
-                        "('" + this.firstname + "', '" + this.lastname + "', '" + this.SSN + "')";
-                break;
-            case "update":
-                sql = "UPDATE Member " +
-                        "SET firstname = '" + this.firstname + "', " +
-                        "lastname = '" + this.lastname + "', " +
-                        "ssn = '" + this.SSN + "'" +
-                        "WHERE ssn = '" + this.SSN + "'";
-                break;
-            case "select":
-                sql = "SELECT * FROM Member WHERE ssn = '" + this.SSN + "'";
-                break;
-            case "delete":
-                sql = "DELETE FROM Member WHERE ssn = '" + this.SSN + "'";
-                break;
-            default:
-                break;
+    public Member clone() {
+        return new Member(this);
+    }
+
+    public String toString() {
+        String str = "\n\n" + this.getSSN() + ": " + this.getFirstname() + " " + this.getLastname() + "\n";
+
+        for (int i = 0; i < this.boats.size(); i++) {
+            str += this.boats.get(i).toString() + " ";
         }
-        return sql;
+        return str;
     }
 
     public String getFirstname() {
@@ -72,4 +65,19 @@ public class Member {
     public void setSSN(String SSN) {
         this.SSN = SSN;
     }
+
+    public void addBoat(Boat boat) {
+        this.boats.add(boat);
+    }
+
+    public ArrayList<Boat> getBoats() {
+        ArrayList<Boat> boats = new ArrayList<>();
+
+        for(Boat b : this.boats) {
+            boats.add(b.clone());
+        }
+        return boats;
+    }
+
+
 }
