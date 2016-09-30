@@ -2,17 +2,26 @@ package view;
 
 public class GUIConsole {
     private Menu menu;
-    private Input input;
 
     public GUIConsole() {
         menu = new Menu();
-        input = new Input();
     }
 
     public void run() {
         System.out.println(menu.getTitleBar());
         System.out.println(menu.getMainMenu());
-        System.out.println(menu.mainMenuRoute(input.getInput()));
+
+        int choice = Input.getInt();
+        while(choice != 0) {
+//            Input.clearBuffer();
+
+            System.out.println(menu.mainMenuRoute(choice));
+            Input.waitForEnterKey();
+            System.out.println(menu.getSeparator() + menu.getMainMenu());
+            choice = Input.getInt();
+
+        }
+
     }
 
 }

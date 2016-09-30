@@ -38,55 +38,65 @@ public class Menu {
         return sb.toString();
     }
 
+    public String getSeparator() {
+        return "------------------------------------\n";
+    }
+
+    private void registerMember() {
+        System.out.print("Enter first name: ");
+        String fName = Input.getString();
+        System.out.print("Enter last name: ");
+        String lName = Input.getString();
+        System.out.print("Enter SSN: ");
+        String ssn = Input.getString();
+
+        // Registry.add(new Member(fName...))
+    }
+
     public String mainMenuRoute(int menuChoice) {
-        String s = "";
+        StringBuilder s = new StringBuilder();
         switch (menuChoice) {
             case 0:     // Quit
-                System.out.println("Quit");
-                break;
+                return null;
             case 1:     // List members compact
-                s = this.membersListCompact();
+                s.append("Compact members list\n");
+                s.append("Press Enter to continue...");
                 break;
             case 2:     // List members verbose
-                System.out.println("List members verbose");
+                s.append("Verbose members list\n");
+                s.append("Press Enter to continue...");
                 break;
             case 3:     // Register member
-                System.out.println("Register member");
+                System.out.println(getSeparator());
+                System.out.println("Register member\n");
+                registerMember();
+                s.append("Press Enter to continue...");
                 break;
             case 4:     // Update member
-                System.out.println("Update member");
+                s.append("Update member\n");
                 break;
             case 5:     // Remove member
-                System.out.println("Remove member");
+                s.append("Remove member\n");
                 break;
             case 6:     // View member
-                System.out.println("View member");
+                s.append("View member");
+                s.append("Press Enter to continue...");
                 break;
             case 7:     // Register boat
-                System.out.println("Register boat");
+                s.append("Register boat\n");
                 break;
             case 8:     // Update boat
-                System.out.println("Update boat");
+                s.append("Update boat\n");
                 break;
             case 9:     // Delete boat
-                System.out.println("Delete boat");
+                s.append("Delete boat\n");
                 break;
             default:    // Default
-                break;
+                return null;
 
         }
 
-        return s;
+        return s.toString();
     }
 
-    private String membersListCompact() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("------------------------------------\n");
-        // TODO: Get each member here.
-        sb.append("Kitty, id: 0, owns 2 boats.\n");
-        sb.append("Popniten, id: 1, owns 1 boats.\n");
-        sb.append("------------------------------------\n");
-
-        return sb.toString();
-    }
 }
