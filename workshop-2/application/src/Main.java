@@ -10,16 +10,13 @@ public class Main {
 
         Registry test = new Registry();
         //test.fetchMember(12345);
-        String str = test.registerMember(new Member("Oskar", "Emilsson", "1337"));
+        String str = test.removeMember(new Member("Pär", "Testsson", "666"));
         System.out.println(str);
 
         test.fetchAllMembers();
 
         ArrayList<Member> list = test.getMembers();
         System.out.println(list.toString());
-        list.get(0).setSSN("fuckedup");
 
-        list = test.getMembers();
-        System.out.println(list.toString());
     }
 }

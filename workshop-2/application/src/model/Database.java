@@ -20,8 +20,7 @@ public class Database {
             case "update":
                 sql = "UPDATE Member " +
                         "SET firstname = '" + mem.getFirstname() + "', " +
-                        "lastname = '" + mem.getLastname() + "', " +
-                        "ssn = '" + mem.getSSN() + "'" +
+                        "lastname = '" + mem.getLastname() + "' " +
                         "WHERE ssn = '" + mem.getSSN() + "'";
                 break;
             case "select":

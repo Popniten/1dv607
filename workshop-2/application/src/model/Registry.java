@@ -34,9 +34,9 @@ public class Registry {
         this.db.closeDatabaseConnection();
     }
 
-    public String registerMember(Member newMember) {
+    /*public String registerMember(Member newMember) {
         return this.db.updateDatabase(this.db.getMemberQuery("insert", newMember));
-    }
+    }*/
 
     private void saveFetchedMembers(ResultSet result) {
         try {
@@ -74,5 +74,20 @@ public class Registry {
             members.add(m.clone());
         }
         return members;
+    }
+
+    /*
+        Function to update a member
+     */
+    public String updateMember(Member mem) {
+        return this.db.updateDatabase(this.db.getMemberQuery("update", mem));
+    }
+
+    public String addMember(Member mem) {
+        return this.db.updateDatabase(this.db.getMemberQuery("insert", mem));
+    }
+
+    public String removeMember(Member mem) {
+        return this.db.updateDatabase(this.db.getMemberQuery("delete", mem));
     }
 }
