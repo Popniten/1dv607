@@ -25,13 +25,19 @@ public class Registry {
         this.db.closeDatabaseConnection();
     }
 
-    public void fetchMember(int ssn) {
+    public boolean fetchMember(String ssn) {
         ResultSet result = this.db.selectFromDatabase(this.db.getMemberQuery(ssn));
 
         this.saveFetchedMembers(result);
 
         //done with fetches, close dbconnection
         this.db.closeDatabaseConnection();
+
+        if (this.getMembers().size() > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /*public String registerMember(Member newMember) {
@@ -61,13 +67,14 @@ public class Registry {
     private void addBoatsToMember(ResultSet result, Member mem) {
         try {
             while(result.next()) {
-                Boat tmp = new Boat(result.getString("type"), result.getInt("length"), result.getString("name"), result.getString("owner"));
+                Boat tmp = new Boat(result.getInt("id"), result.getString("type"), result.getInt("length"), result.getString("name"), result.getString("owner"));
                 mem.addBoat(tmp);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     public ArrayList<Member> getMembers() {
         ArrayList<Member> members = new ArrayList<>();
         for(Member m : this.members) {
@@ -76,18 +83,47 @@ public class Registry {
         return members;
     }
 
-    /*
-        Function to update a member
-     */
-    public String updateMember(Member mem) {
-        return this.db.updateDatabase(this.db.getMemberQuery("update", mem));
-    }
-
     public String addMember(Member mem) {
         return this.db.updateDatabase(this.db.getMemberQuery("insert", mem));
     }
 
+    public String updateMember(Member mem) {
+        return this.db.updateDatabase(this.db.getMemberQuery("update", mem));
+    }
+
     public String removeMember(Member mem) {
         return this.db.updateDatabase(this.db.getMemberQuery("delete", mem));
+    }
+
+    /*
+        Returns a member if found, null if not
+     */
+    public Member getMember(String ssn) {
+        this.fetchMember(ssn);
+        if (this.getMembers().size() > 0) {
+            return this.getMembers().get(0);
+        }
+        return null;
+    }
+
+    /*
+        Boat functions
+    */
+    public String addBoat(Boat boat) {
+        if(this.fetchMember(boat.getOwner())) {
+            return this.db.updateDatabase(this.db.getBoatQuery("insert", boat));
+        }
+        else {
+            return "No member found with that SSN";
+        }
+
+    }
+
+    public String updateBoat(Boat boat) {
+        return this.db.updateDatabase(this.db.getBoatQuery("update", boat));
+    }
+
+    public String removeBoat(Boat boat) {
+        return this.db.updateDatabase(this.db.getBoatQuery("delete", boat));
     }
 }

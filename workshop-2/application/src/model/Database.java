@@ -39,7 +39,7 @@ public class Database {
         return "SELECT * FROM Member";
     }
 
-    protected String getMemberQuery(int ssn) {
+    protected String getMemberQuery(String ssn) {
         return "SELECT * FROM Member WHERE ssn = '" + ssn + "'";
     }
 
@@ -47,20 +47,47 @@ public class Database {
         return "SELECT * FROM Boat WHERE owner = '" + mem.getSSN() + "'";
     }
 
+    protected String getBoatQuery(String command, Boat boat) {
+        String sql = "";
+        switch(command) {
+            case "insert":
+                sql = "INSERT INTO Boat (type, name, length, owner) VALUES " +
+                        "('" + boat.getType() + "', '" + boat.getName() + "', '" +
+                            boat.getLength() + "', '" + boat.getOwner()+ "')";
+                break;
+            case "update":
+                sql = "UPDATE Boat " +
+                        "SET type = '" + boat.getType() + "', " +
+                        "name = '" + boat.getName() + "', " +
+                        "length = '" + boat.getLength() + "', " +
+                        "owner = '" + boat.getOwner() + "' " +
+                        "WHERE id = '" + boat.getId() + "'";
+                break;
+            case "select":
+                sql = "SELECT * FROM Boat WHERE id = '" + boat.getId() + "'";
+                break;
+            case "delete":
+                sql = "DELETE FROM Boat WHERE id = '" + boat.getId() + "'";
+                break;
+            default:
+                break;
+        }
+        return sql;
+    }
+
     protected ResultSet selectFromDatabase(String sql) {
         ResultSet result = null;
-        if (this.c == null) {
-            this.connectToDatabase();
-        }
+        this.connectToDatabase();
 
         try {
             this.stmt = this.c.createStatement();
             result = stmt.executeQuery(sql);
 
             //stmt.close();
-            return result;
+            //return result;
         } catch(Exception e) {
             e.printStackTrace();
+            //return null;
         }
 
         //this.closeDatabaseConnection();
@@ -83,19 +110,39 @@ public class Database {
     }
 
     private boolean connectToDatabase() {
-        System.out.println("connection...");
-        try {
-            Class.forName("org.sqlite.JDBC");
-            this.c = DriverManager.getConnection("jdbc:sqlite:data/MemberRegistry.db");
-        } catch ( Exception e ) {
-            System.out.println("WOOPSIE");
-            e.printStackTrace();
+        if(isConnectionClosed()) {
+            System.out.println("connection...");
+            try {
+                Class.forName("org.sqlite.JDBC");
+                this.c = DriverManager.getConnection("jdbc:sqlite:data/MemberRegistry.db");
+                return true;
+            } catch (Exception e) {
+                System.out.println("WOOPSIE");
+                e.printStackTrace();
+                return false;
+            }
+        }
+        else {
             return false;
         }
-        return true;
+    }
+
+    private boolean isConnectionClosed() {
+        if (this.c != null) {
+            //check if the connection is closed
+            try {
+                return this.c.isClosed();
+            } catch (SQLException e) {
+                return false;
+            }
+        } else {
+            //this.c is null, therefore closed
+            return true;
+        }
     }
 
     public void closeDatabaseConnection() {
+        System.out.println("closing connection...");
         if (this.c != null) {
             try {
                 //this.c.commit();

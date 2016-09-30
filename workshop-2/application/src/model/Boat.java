@@ -6,6 +6,7 @@ import java.util.ArrayList;
  * Created by popniten on 2016-09-21.
  */
 public class Boat {
+    private int id;
     private String type;
     private int length;
     private String name;
@@ -18,8 +19,17 @@ public class Boat {
         this.setOwner(owner);
     }
 
+    public Boat(int id, String type, int length, String name, String owner) {
+        this.setId(id);
+        this.setType(type);
+        this.setLength(length);
+        this.setName(name);
+        this.setOwner(owner);
+    }
+
     /* Copy constructor */
     public Boat(Boat that) {
+        this.setId(that.getId());
         this.setType(that.getType());
         this.setLength(that.getLength());
         this.setName(that.getName());
@@ -28,6 +38,14 @@ public class Boat {
 
     public Boat clone() {
         return new Boat(this);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getType() {
@@ -63,6 +81,6 @@ public class Boat {
     }
 
     public String toString() {
-        return this.getName() + ", " + this.getType();
+        return this.getName() + ", " + this.getType() + ", " + this.getLength() + "cm.";
     }
 }
