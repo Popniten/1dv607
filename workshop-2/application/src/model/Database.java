@@ -68,7 +68,7 @@ public class Database {
         return result;
     }
 
-    private boolean updateDatabase(String sql) {
+    protected String updateDatabase(String sql) {
         this.connectToDatabase();
 
         try {
@@ -76,13 +76,11 @@ public class Database {
             stmt.executeUpdate(sql);
 
             //stmt.close();
-            return true;
+            return null;
         } catch(Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            return e.getMessage();
         }
-
-        //this.closeDatabaseConnection();
-        return false;
     }
 
     private boolean connectToDatabase() {

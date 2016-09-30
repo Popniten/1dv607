@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 /**
  * Created by popniten on 2016-09-21.
  */
@@ -7,13 +9,25 @@ public class Boat {
     private String type;
     private int length;
     private String name;
-    private int owner;
+    private String owner;
 
-    public Boat(String type, int length, String name, int owner) {
+    public Boat(String type, int length, String name, String owner) {
         this.setType(type);
         this.setLength(length);
         this.setName(name);
         this.setOwner(owner);
+    }
+
+    /* Copy constructor */
+    public Boat(Boat that) {
+        this.setType(that.getType());
+        this.setLength(that.getLength());
+        this.setName(that.getName());
+        this.setOwner(that.getOwner());
+    }
+
+    public Boat clone() {
+        return new Boat(this);
     }
 
     public String getType() {
@@ -40,11 +54,11 @@ public class Boat {
         this.name = name;
     }
 
-    public int getOwner() {
+    public String getOwner() {
         return owner;
     }
 
-    public void setOwner(int owner) {
+    public void setOwner(String owner) {
         this.owner = owner;
     }
 

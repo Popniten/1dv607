@@ -21,8 +21,6 @@ public class Registry {
 
         this.saveFetchedMembers(result);
 
-        System.out.println(this.members.toString());
-
         //done with fetches, close dbconnection
         this.db.closeDatabaseConnection();
     }
@@ -32,14 +30,17 @@ public class Registry {
 
         this.saveFetchedMembers(result);
 
-        System.out.println(this.members.toString());
-
         //done with fetches, close dbconnection
         this.db.closeDatabaseConnection();
     }
 
+    public String registerMember(Member newMember) {
+        return this.db.updateDatabase(this.db.getMemberQuery("insert", newMember));
+    }
+
     private void saveFetchedMembers(ResultSet result) {
         try {
+            this.members = new ArrayList<>();
             while(result.next()) {
                 Member tmp = new Member(result.getString("firstname"), result.getString("lastname"), result.getString("ssn"));
 
@@ -60,11 +61,18 @@ public class Registry {
     private void addBoatsToMember(ResultSet result, Member mem) {
         try {
             while(result.next()) {
-                Boat tmp = new Boat(result.getString("type"), result.getInt("length"), result.getString("name"), result.getInt("owner"));
+                Boat tmp = new Boat(result.getString("type"), result.getInt("length"), result.getString("name"), result.getString("owner"));
                 mem.addBoat(tmp);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    public ArrayList<Member> getMembers() {
+        ArrayList<Member> members = new ArrayList<>();
+        for(Member m : this.members) {
+            members.add(m.clone());
+        }
+        return members;
     }
 }

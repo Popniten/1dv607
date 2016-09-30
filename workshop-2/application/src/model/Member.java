@@ -21,6 +21,18 @@ public class Member {
         setSSN(SSN);
     }
 
+    /*copy constructor*/
+    public Member(Member that) {
+        this.boats = that.getBoats();
+        this.setLastname(that.getLastname());
+        this.setFirstname(that.getFirstname());
+        this.setSSN(that.getSSN());
+    }
+
+    public Member clone() {
+        return new Member(this);
+    }
+
     public String toString() {
         String str = "\n\n" + this.getSSN() + ": " + this.getFirstname() + " " + this.getLastname() + "\n";
 
@@ -57,4 +69,15 @@ public class Member {
     public void addBoat(Boat boat) {
         this.boats.add(boat);
     }
+
+    public ArrayList<Boat> getBoats() {
+        ArrayList<Boat> boats = new ArrayList<>();
+
+        for(Boat b : this.boats) {
+            boats.add(b.clone());
+        }
+        return boats;
+    }
+
+
 }
