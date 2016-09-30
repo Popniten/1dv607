@@ -53,6 +53,26 @@ public class Menu {
         // Registry.add(new Member(fName...))
     }
 
+    private void updateMember() {
+        System.out.print("Enter SSN of member to update: ");
+        String ssn = Input.getString();
+        System.out.print("Enter first name (NameFromDatabase): ");
+        String fName = Input.getString();
+        System.out.print("Enter last name (NameFromDatabase): ");
+        String lName = Input.getString();
+    }
+
+    private void removeMember() {
+        System.out.print("Enter SSN of member to delete: ");
+        String ssn = Input.getString();
+        System.out.print("Are you sure you want to do this (y/n)? ");
+        String answer = Input.getString();
+
+        if (answer.equals("y")) {
+            System.out.println("Deleting member...");
+        }
+    }
+
     public String mainMenuRoute(int menuChoice) {
         StringBuilder s = new StringBuilder();
         switch (menuChoice) {
@@ -69,14 +89,20 @@ public class Menu {
             case 3:     // Register member
                 System.out.println(getSeparator());
                 System.out.println("Register member\n");
-                registerMember();
+                this.registerMember();
                 s.append("Press Enter to continue...");
                 break;
             case 4:     // Update member
-                s.append("Update member\n");
+                System.out.println(getSeparator());
+                System.out.println("Update member\n");
+                this.updateMember();
+                s.append("Press Enter to continue...");
                 break;
             case 5:     // Remove member
-                s.append("Remove member\n");
+                System.out.println(getSeparator());
+                System.out.println("Remove member\n");
+                this.removeMember();
+                s.append("Press Enter to continue...");
                 break;
             case 6:     // View member
                 s.append("View member");
