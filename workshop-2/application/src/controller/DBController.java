@@ -3,7 +3,7 @@ package controller;
 import java.sql.*;
 
 public class DBController {
-    private Connection c = null;
+    /*private Connection c = null;
     private Statement stmt = null;
 
     public ResultSet selectFromDatabase(String sql) {
@@ -65,5 +65,5 @@ public class DBController {
                 e.printStackTrace();
             }
         }
-    }
+    }*/
 }
