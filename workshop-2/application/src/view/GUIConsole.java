@@ -27,7 +27,7 @@ public class GUIConsole {
             key = this.input.nextInt();
             switch (key) {
                 case 1:
-                    printMemberList(db.selectFromDatabase("SELECT * FROM Member"));
+                    //printMemberList(db.selectFromDatabase("SELECT * FROM Member"));
                     break;
                 case 2:
                     registerMember();
@@ -74,6 +74,6 @@ public class GUIConsole {
         String lastname = this.input.nextLine();
 
         Member newMember = new Member(firstname, lastname, ssn);
-        this.db.updateDatabase(newMember.getSQLQuery("insert"));
+        //this.db.updateDatabase(newMember.getSQLQuery("insert"));
     }
 }
