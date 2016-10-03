@@ -3,6 +3,8 @@ package view;
 import model.Member;
 import model.Registry;
 
+import java.util.ArrayList;
+
 public class Menu {
     private StringBuilder titleBar;
     private Registry reg = new Registry();
@@ -57,8 +59,6 @@ public class Menu {
         String test = reg.addMember(new Member(fName, lName, ssn));
 
         System.out.println(test);
-
-        // Registry.add(new Member(fName...))
     }
 
     private void updateMember() {
@@ -68,6 +68,13 @@ public class Menu {
         String fName = Input.getString();
         System.out.print("Enter last name (NameFromDatabase): ");
         String lName = Input.getString();
+
+        Member m = reg.getMember(ssn);
+
+        m.setFirstname(fName);
+        m.setLastname(lName);
+
+        reg.updateMember(m);
     }
 
     private void removeMember() {
@@ -88,6 +95,14 @@ public class Menu {
                 return null;
             case 1:     // List members compact
                 s.append("Compact members list\n");
+
+                ArrayList<Member> members = reg.getMembers();
+                System.out.println(members.size());
+
+                for (Member m : members) {
+                    System.out.println(m.toString());
+                }
+
                 s.append("Press Enter to continue...");
                 break;
             case 2:     // List members verbose
