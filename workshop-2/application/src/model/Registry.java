@@ -27,7 +27,6 @@ public class Registry {
 
     private boolean fetchMember(String ssn) {
         ResultSet result = this.db.selectFromDatabase(this.db.getMemberQuery(ssn));
-
         this.saveFetchedMembers(result);
 
         //done with fetches, close dbconnection
@@ -37,11 +36,21 @@ public class Registry {
     }
 
     private boolean isMember(String ssn) {
-        if (this.getMembers().size() > 0) {
-            return true;
-        } else {
-            return false;
+        boolean valid = false;
+        ResultSet result = this.db.selectFromDatabase(this.db.getMemberQuery(ssn));
+        try {
+            if (result.next()) {
+                valid = true;
+            } else {
+                valid = false;
+            }
+        } catch (SQLException e) {
+            valid = false;
         }
+        //done with fetches, close dbconnection
+        this.db.closeDatabaseConnection();
+
+        return valid;
     }
 
     /*public String registerMember(Member newMember) {
@@ -114,9 +123,8 @@ public class Registry {
         Returns a member if found, null if not
      */
     public Member getMember(String ssn) {
-        this.fetchMember(ssn);
-        if (this.getMembers().size() > 0) {
-            return this.getMembers().get(0);
+        if (this.fetchMember(ssn)) {
+            return this.members.get(0);
         }
         return null;
     }
