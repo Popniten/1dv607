@@ -111,7 +111,6 @@ public class Database {
 
     private boolean connectToDatabase() {
         if(isConnectionClosed()) {
-            System.out.println("connection...");
             try {
                 Class.forName("org.sqlite.JDBC");
                 this.c = DriverManager.getConnection("jdbc:sqlite:data/MemberRegistry.db");
@@ -142,7 +141,6 @@ public class Database {
     }
 
     public void closeDatabaseConnection() {
-        System.out.println("closing connection...");
         if (this.c != null) {
             try {
                 //this.c.commit();
