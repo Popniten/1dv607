@@ -186,38 +186,47 @@ public class Menu {
         }
     }
 
-    private void updateBoatMenu() {
+    private Boat boatMenu(String action) {
         System.out.print("Enter owner SSN: ");
         String ssn = Input.getString();
         Member m = reg.getMember(ssn);
+        Boat b = null;
 
         if (m != null) {
             ArrayList<Boat> boats = m.getBoats();
 
-            if (boats.size() > 1) {
+            if (boats.size() > 0) {
                 for (int i = 0; i < boats.size(); i++) {
                     System.out.println((i + 1) + ": " + boats.get(i).getName());
                 }
 
-                System.out.println("Which boat do you wish to update? ");
-                updateBoat(boats.get(Input.getInt() - 1));
-            } else if (boats.size() == 1) {
-                Boat b = boats.get(0);
-                updateBoat(b);
+                System.out.print("Which boat do you wish to " + action + "? ");
+                try {
+                    b = boats.get(Input.getInt() - 1);
+                } catch (Exception e) {
+                    // TODO: MESSAGE!
+                }
             } else {
                 System.out.println("That member does not own any boats.");
             }
         } else {
             System.out.println("That member does not exist!");
         }
+
+        return b;
     }
 
-    private void deleteBoat() {
-
+    private void deleteBoat(Boat b) {
+        if (b != null) {
+            reg.removeBoat(b);
+        } else {
+            System.out.println("Boat does not exist!");
+        }
     }
 
     public String mainMenuRoute(int menuChoice) {
         StringBuilder s = new StringBuilder();
+        Boat b;
         switch (menuChoice) {
             case 0:     // Quit
                 return null;
@@ -255,11 +264,17 @@ public class Menu {
                 break;
             case 8:     // Update boat
                 s.append("Update boat\n");
-                this.updateBoatMenu();
+                b = this.boatMenu("update");
+                if (b != null) {
+                    this.updateBoat(b);
+                }
                 break;
             case 9:     // Delete boat
                 s.append("Delete boat\n");
-                this.deleteBoat();
+                b = this.boatMenu("delete");
+                if (b != null) {
+                    this.deleteBoat(b);
+                }
                 break;
             default:    // Default
                 return null;
