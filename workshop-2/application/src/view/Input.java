@@ -7,7 +7,7 @@ public class Input {
 
     public static int getInt() {
         int i = input.nextInt();
-        input = new Scanner(System.in);
+        clearBuffer();
         return i;
     }
 
@@ -21,11 +21,11 @@ public class Input {
 
     public static String getString() {
         String s = input.nextLine();
-        input = new Scanner(System.in);
+        clearBuffer();
         return s;
     }
 
-    public static void clearBuffer() {
+    private static void clearBuffer() {
         input = new Scanner(System.in);
     }
 }
