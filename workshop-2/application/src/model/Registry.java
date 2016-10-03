@@ -16,7 +16,7 @@ public class Registry {
         members = new ArrayList<>();
     }
 
-    public void fetchAllMembers() {
+    private void fetchAllMembers() {
         ResultSet result = this.db.selectFromDatabase(this.db.getMemberQuery());
 
         this.saveFetchedMembers(result);
@@ -25,7 +25,7 @@ public class Registry {
         this.db.closeDatabaseConnection();
     }
 
-    public boolean fetchMember(String ssn) {
+    private boolean fetchMember(String ssn) {
         ResultSet result = this.db.selectFromDatabase(this.db.getMemberQuery(ssn));
 
         this.saveFetchedMembers(result);
@@ -80,6 +80,7 @@ public class Registry {
     }
 
     public ArrayList<Member> getMembers() {
+        this.fetchAllMembers();
         ArrayList<Member> members = new ArrayList<>();
         for(Member m : this.members) {
             members.add(m.clone());

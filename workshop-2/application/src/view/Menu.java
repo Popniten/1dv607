@@ -1,7 +1,11 @@
 package view;
 
+import model.Member;
+import model.Registry;
+
 public class Menu {
     private StringBuilder titleBar;
+    private Registry reg = new Registry();
 
     public Menu() {
         this.initTitleBar();
@@ -49,6 +53,10 @@ public class Menu {
         String lName = Input.getString();
         System.out.print("Enter SSN: ");
         String ssn = Input.getString();
+
+        String test = reg.addMember(new Member(fName, lName, ssn));
+
+        System.out.println(test);
 
         // Registry.add(new Member(fName...))
     }
