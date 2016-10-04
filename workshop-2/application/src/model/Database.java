@@ -43,6 +43,7 @@ public class Database {
         return "SELECT * FROM Member WHERE ssn = '" + ssn + "'";
     }
 
+
     protected String getMemberBoatsQuery(Member mem) {
         return "SELECT * FROM Boat WHERE owner = '" + mem.getSSN() + "'";
     }
@@ -75,6 +76,9 @@ public class Database {
         return sql;
     }
 
+    /*
+    Returns ResultSet if success, null if not
+     */
     protected ResultSet selectFromDatabase(String sql) {
         ResultSet result = null;
         this.connectToDatabase();
@@ -83,17 +87,16 @@ public class Database {
             this.stmt = this.c.createStatement();
             result = stmt.executeQuery(sql);
 
-            //stmt.close();
-            //return result;
         } catch(Exception e) {
-            e.printStackTrace();
-            //return null;
+            result = null;
         }
 
-        //this.closeDatabaseConnection();
         return result;
     }
 
+    /*
+    Returns null if update was sucessful
+     */
     protected String updateDatabase(String sql) {
         this.connectToDatabase();
 
@@ -101,10 +104,8 @@ public class Database {
             this.stmt = this.c.createStatement();
             stmt.executeUpdate(sql);
 
-            //stmt.close();
             return null;
         } catch(Exception e) {
-            //e.printStackTrace();
             return e.getMessage();
         }
     }
@@ -140,10 +141,9 @@ public class Database {
         }
     }
 
-    public void closeDatabaseConnection() {
+    protected void closeDatabaseConnection() {
         if (this.c != null) {
             try {
-                //this.c.commit();
                 this.stmt.close();
                 this.c.close();
             } catch (SQLException e) {

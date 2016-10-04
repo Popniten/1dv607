@@ -20,17 +20,11 @@ public class Registry {
         ResultSet result = this.db.selectFromDatabase(this.db.getMemberQuery());
 
         this.saveFetchedMembers(result);
-
-        //done with fetches, close dbconnection
-        this.db.closeDatabaseConnection();
     }
 
     private boolean fetchMember(String ssn) {
         ResultSet result = this.db.selectFromDatabase(this.db.getMemberQuery(ssn));
         this.saveFetchedMembers(result);
-
-        //done with fetches, close dbconnection
-        this.db.closeDatabaseConnection();
 
         return isMember(ssn);
     }
@@ -67,6 +61,9 @@ public class Registry {
 
                 this.members.add(tmp);
             }
+
+            //done with fetches, close dbconnection
+            this.db.closeDatabaseConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
