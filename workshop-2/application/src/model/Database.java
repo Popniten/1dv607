@@ -48,20 +48,25 @@ public class Database {
         return "SELECT * FROM Boat WHERE owner = '" + mem.getSSN() + "'";
     }
 
+    protected String getInsertBoatQuery(String ownerSsn, Boat boat) {
+        return "INSERT INTO Boat (type, name, length, owner) VALUES " +
+                "('" + boat.getType() + "', '" + boat.getName() + "', '" +
+                boat.getLength() + "', '" + ownerSsn + "')";
+    }
+
     protected String getBoatQuery(String command, Boat boat) {
         String sql = "";
         switch(command) {
             case "insert":
-                sql = "INSERT INTO Boat (type, name, length, owner) VALUES " +
+                sql = "INSERT INTO Boat (type, name, length) VALUES " +
                         "('" + boat.getType() + "', '" + boat.getName() + "', '" +
-                            boat.getLength() + "', '" + boat.getOwner()+ "')";
+                            boat.getLength() + "')";
                 break;
             case "update":
                 sql = "UPDATE Boat " +
                         "SET type = '" + boat.getType() + "', " +
                         "name = '" + boat.getName() + "', " +
-                        "length = '" + boat.getLength() + "', " +
-                        "owner = '" + boat.getOwner() + "' " +
+                        "length = '" + boat.getLength() + "' " +
                         "WHERE id = '" + boat.getId() + "'";
                 break;
             case "select":

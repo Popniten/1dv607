@@ -142,7 +142,7 @@ public class Menu {
             System.out.print("Enter boat length (in cm): ");
             int bLength = Input.getInt();
 
-            reg.addBoat(new Boat(bType, bLength, bName, ssn));
+            reg.addBoat(ssn, new Boat(bType, bLength, bName));
         } else {
             System.out.println("That member does not exist!");
         }
@@ -156,8 +156,6 @@ public class Menu {
         String bLength = Input.getString();
         System.out.print("Enter new boat type (" + b.getType() + "): ");
         String bType = Input.getString();
-        System.out.print("Enter new boat owner SSN (" + b.getOwner() + "): ");
-        String bOwnerSSN = Input.getString();
 
         if (!bName.equals("")) {
             b.setName(bName);
@@ -173,10 +171,6 @@ public class Menu {
 
         if (!bType.equals("")) {
             b.setType(bType);
-        }
-
-        if (!bOwnerSSN.equals("")) {
-            b.setOwner(bOwnerSSN);
         }
 
         if (correctInput) {

@@ -77,7 +77,7 @@ public class Registry {
     private void addBoatsToMember(ResultSet result, Member mem) {
         try {
             while(result.next()) {
-                Boat tmp = new Boat(result.getInt("id"), result.getString("type"), result.getInt("length"), result.getString("name"), result.getString("owner"));
+                Boat tmp = new Boat(result.getInt("id"), result.getString("type"), result.getInt("length"), result.getString("name"));
                 mem.addBoat(tmp);
             }
         } catch (SQLException e) {
@@ -129,9 +129,9 @@ public class Registry {
     /*
         Boat functions
     */
-    public String addBoat(Boat boat) {
-        if(this.fetchMember(boat.getOwner())) {
-            return this.db.updateDatabase(this.db.getBoatQuery("insert", boat));
+    public String addBoat(String ownerSsn, Boat boat) {
+        if(this.fetchMember(ownerSsn)) {
+            return this.db.updateDatabase(this.db.getInsertBoatQuery(ownerSsn, boat));
         }
         else {
             return "No member found with that SSN";

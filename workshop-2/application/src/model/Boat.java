@@ -10,21 +10,18 @@ public class Boat {
     private String type;
     private int length;
     private String name;
-    private String owner;
 
-    public Boat(String type, int length, String name, String owner) {
+    public Boat(String type, int length, String name) {
         this.setType(type);
         this.setLength(length);
         this.setName(name);
-        this.setOwner(owner);
     }
 
-    public Boat(int id, String type, int length, String name, String owner) {
+    public Boat(int id, String type, int length, String name) {
         this.setId(id);
         this.setType(type);
         this.setLength(length);
         this.setName(name);
-        this.setOwner(owner);
     }
 
     /* Copy constructor */
@@ -33,7 +30,6 @@ public class Boat {
         this.setType(that.getType());
         this.setLength(that.getLength());
         this.setName(that.getName());
-        this.setOwner(that.getOwner());
     }
 
     public Boat clone() {
@@ -70,14 +66,6 @@ public class Boat {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
     }
 
     public String toString() {
