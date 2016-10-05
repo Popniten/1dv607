@@ -110,7 +110,8 @@ class MenuOptions {
     }
 
     /**
-     *
+     * Prints out an existing members information after
+     * asking for a social security number.
      */
     void viewMember() {
         System.out.print("Enter SSN of member to view: ");
@@ -138,11 +139,15 @@ class MenuOptions {
         }
     }
 
+    /**
+     * Registers a new boat to an existing member.
+     */
     void registerBoat() {
         System.out.print("Enter owner SSN: ");
         String ssn = Input.getString();
         Member m = registry.getMember(ssn);
 
+        // If member exists, get new boat information and register it.
         if (m != null) {
             System.out.print("Enter boat name: ");
             String bName = Input.getString();
@@ -165,6 +170,11 @@ class MenuOptions {
         }
     }
 
+    /**
+     * Updates the information on an existing boat.
+     *
+     * @param b The boat to update.
+     */
     void updateBoat(Boat b) {
         boolean correctInput = true;
         System.out.print("Enter new boat name (" + b.getName() + "): ");
@@ -175,6 +185,7 @@ class MenuOptions {
 
         Boat.BoatType[] boatTypes = Boat.BoatType.values();
 
+        // Print out the available boat types.
         for (int i = 0; i < boatTypes.length; i++) {
             System.out.println("  " + (i + 1) + ". " + boatTypeOutput(boatTypes[i]));
         }
@@ -203,6 +214,26 @@ class MenuOptions {
         }
     }
 
+    /**
+     * Deletes a boat from a user.
+     *
+     * @param b The boat to delete.
+     */
+    void deleteBoat(Boat b) {
+        if (b != null) {
+            registry.removeBoat(b);
+        } else {
+            System.out.println("Boat does not exist!");
+        }
+    }
+
+    /**
+     * A method to choose a boat from a member to
+     * either update or delete.
+     *
+     * @param action The action to perform (used for output).
+     * @return Boat The boat to process.
+     */
     Boat chooseBoat(String action) {
         System.out.print("Enter owner SSN: ");
         String ssn = Input.getString();
@@ -231,14 +262,6 @@ class MenuOptions {
         }
 
         return b;
-    }
-
-    void deleteBoat(Boat b) {
-        if (b != null) {
-            registry.removeBoat(b);
-        } else {
-            System.out.println("Boat does not exist!");
-        }
     }
 
     /*
