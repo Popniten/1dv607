@@ -4,11 +4,7 @@
 
 ### Project structure
 
-```
-[workshop-2]
-  [application]  <-- Application source code
-  [release]      <-- Executable jar-file plus database
-```
+The `application` folder contains the source code for the application and the `release` folder contains the built application.
 
 ### Running the application
 
