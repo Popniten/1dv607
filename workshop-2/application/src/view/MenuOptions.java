@@ -146,7 +146,7 @@ class MenuOptions {
         System.out.println(m.getFirstname() + " " + m.getLastname() + " (" + m.getSSN() + ")");
         System.out.println("  Boats: " + m.getBoats().size());
         for (Boat b : list) {
-            System.out.println("    " + b.getName() + ", " + boatTypeOutput(b.getType()) + ", " + b.getLength() + " cm.");
+            System.out.println("    " + b.getName() + ", " + b.getType() + ", " + b.getLength() + " cm.");
         }
     }
 
@@ -169,7 +169,7 @@ class MenuOptions {
             Boat.BoatType[] boatTypes = Boat.BoatType.values();
 
             for (int i = 0; i < boatTypes.length; i++) {
-                System.out.println("  " + (i + 1) + ". " + boatTypeOutput(boatTypes[i]));
+                System.out.println("  " + (i + 1) + ". " + boatTypes[i]);
             }
 
             System.out.print("Enter choice: ");
@@ -198,7 +198,7 @@ class MenuOptions {
 
         // Print out the available boat types.
         for (int i = 0; i < boatTypes.length; i++) {
-            System.out.println("  " + (i + 1) + ". " + boatTypeOutput(boatTypes[i]));
+            System.out.println("  " + (i + 1) + ". " + boatTypes[i]);
         }
 
         System.out.print("Enter choice: ");
@@ -273,15 +273,6 @@ class MenuOptions {
         }
 
         return b;
-    }
-
-    /*
-     * Takes a Boat.BoatType and returns a string
-     * with output appropriate format.
-     */
-    private String boatTypeOutput(Boat.BoatType b) {
-        String str = b.toString().toLowerCase();
-        return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
     private boolean isEmpty(String s) {
