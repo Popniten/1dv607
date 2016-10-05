@@ -53,7 +53,7 @@ public class Registry {
             while(result.next()) {
                 Member tmp = new Member(result.getString("firstname"), result.getString("lastname"), result.getString("ssn"));
 
-                this.fetchBoats(tmp);
+                this.addMembersBoats(tmp);
 
                 this.members.add(tmp);
             }
@@ -65,15 +65,13 @@ public class Registry {
         }
     }
 
-    private void fetchBoats(Member mem) {
-        ResultSet result = this.db.selectFromDatabase(this.db.getMemberBoatsQuery(mem));
-        this.addBoatsToMember(result, mem);
-    }
-
-    private void addBoatsToMember(ResultSet result, Member mem) {
+    private void addMembersBoats(Member mem) {
         try {
+            ResultSet result = this.db.selectFromDatabase(this.db.getMemberBoatsQuery(mem));
+
             while(result.next()) {
-                Boat tmp = new Boat(result.getInt("id"), result.getString("type"), result.getInt("length"), result.getString("name"));
+                Boat.BoatType type = Boat.BoatType.valueOf(result.getString("type"));
+                Boat tmp = new Boat(result.getInt("id"), type, result.getInt("length"), result.getString("name"));
                 mem.addBoat(tmp);
             }
         } catch (SQLException e) {

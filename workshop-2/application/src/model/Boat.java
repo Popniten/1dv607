@@ -7,17 +7,21 @@ import java.util.ArrayList;
  */
 public class Boat {
     private int id;
-    private String type;
+    private BoatType type;
     private int length;
     private String name;
 
-    public Boat(String type, int length, String name) {
+    public enum BoatType {
+        Sailboat, Motorsailer, Canoe, Other
+    }
+
+    public Boat(BoatType type, int length, String name) {
         this.setType(type);
         this.setLength(length);
         this.setName(name);
     }
 
-    public Boat(int id, String type, int length, String name) {
+    public Boat(int id, BoatType type, int length, String name) {
         this.setId(id);
         this.setType(type);
         this.setLength(length);
@@ -50,18 +54,13 @@ public class Boat {
         }
     }
 
-    public String getType() {
+    public BoatType getType() {
         return type;
     }
 
-    public boolean setType(String type) {
-        if (!type.trim().equals("")) {
-            this.type = type;
-            return true;
-        }
-        else {
-            return false;
-        }
+    public boolean setType(BoatType type) {
+        this.type = type;
+        return true;
     }
 
     public int getLength() {
