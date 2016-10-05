@@ -1,10 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-
-/**
- * Created by popniten on 2016-09-21.
- */
 public class Boat {
     private int id;
     private BoatType type;
@@ -67,13 +62,12 @@ public class Boat {
         return length;
     }
 
-    public boolean setLength(int length) {
+    public void setLength(int length) {
         if (length > 0) {
             this.length = length;
-            return true;
         }
         else {
-            return false;
+            throw new IllegalArgumentException("Boat length cannot be zero or less.");
         }
     }
 
@@ -81,13 +75,12 @@ public class Boat {
         return name;
     }
 
-    public boolean setName(String name) {
+    public void setName(String name) {
         if (!name.equals("")) {
             this.name = name;
-            return true;
         }
         else {
-            return false;
+            throw new IllegalArgumentException("Boat name cannot be empty.");
         }
     }
 

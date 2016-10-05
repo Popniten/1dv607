@@ -175,7 +175,13 @@ class MenuOptions {
             System.out.print("Enter choice: ");
             int bType = Input.getInt();
 
-            registry.addBoat(ssn, new Boat(boatTypes[bType - 1], bLength, bName));
+            try {
+                registry.addBoat(ssn, new Boat(boatTypes[bType - 1], bLength, bName));
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Not a valid boat type.");
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         } else {
             System.out.println("That member does not exist!");
         }
@@ -187,41 +193,45 @@ class MenuOptions {
      * @param b The boat to update.
      */
     void updateBoat(Boat b) {
-        boolean correctInput = true;
-        System.out.print("Enter new boat name (" + b.getName() + "): ");
-        String bName = Input.getString();
-        System.out.print("Enter new boat length (" + b.getLength() + "): ");
-        String bLength = Input.getString();
-        System.out.println("Choose boat type: ");
+        if (b != null) {
+            boolean correctInput = true;
+            System.out.print("Enter new boat name (" + b.getName() + "): ");
+            String bName = Input.getString();
+            System.out.print("Enter new boat length (" + b.getLength() + "): ");
+            String bLength = Input.getString();
+            System.out.println("Choose boat type: ");
 
-        Boat.BoatType[] boatTypes = Boat.BoatType.values();
+            Boat.BoatType[] boatTypes = Boat.BoatType.values();
 
-        // Print out the available boat types.
-        for (int i = 0; i < boatTypes.length; i++) {
-            System.out.println("  " + (i + 1) + ". " + boatTypes[i]);
-        }
-
-        System.out.print("Enter choice: ");
-        int bType = Input.getInt();
-
-        b.setType(boatTypes[bType - 1]);
-
-        if (!bName.equals("")) {
-            b.setName(bName);
-        }
-
-        if (!bLength.equals("")) {
-            try {
-                b.setLength(Integer.parseInt(bLength));
-            } catch (Exception e) {
-                correctInput = false;
+            // Print out the available boat types.
+            for (int i = 0; i < boatTypes.length; i++) {
+                System.out.println("  " + (i + 1) + ". " + boatTypes[i]);
             }
-        }
 
-        if (correctInput) {
-            registry.updateBoat(b);
+            System.out.print("Enter choice: ");
+            int bType = Input.getInt();
+
+            b.setType(boatTypes[bType - 1]);
+
+            if (!bName.equals("")) {
+                b.setName(bName);
+            }
+
+            if (!bLength.equals("")) {
+                try {
+                    b.setLength(Integer.parseInt(bLength));
+                } catch (Exception e) {
+                    correctInput = false;
+                }
+            }
+
+            if (correctInput) {
+                registry.updateBoat(b);
+            } else {
+                System.out.println("Something went wrong, check your input.");
+            }
         } else {
-            System.out.println("Something went wrong, check your input.");
+            System.out.println("Boat does not exist!");
         }
     }
 
