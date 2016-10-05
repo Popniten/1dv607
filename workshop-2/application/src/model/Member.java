@@ -1,8 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by popniten on 2016-09-21.
@@ -46,24 +44,42 @@ public class Member {
         return firstname;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public boolean setFirstname(String firstname) {
+        if (!firstname.trim().equals("")) {
+            this.firstname = firstname;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public String getLastname() {
         return lastname;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public boolean setLastname(String lastname) {
+        if (!lastname.trim().equals("")) {
+            this.lastname = lastname;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public String getSSN() {
         return SSN;
     }
 
-    public void setSSN(String SSN) {
-        this.SSN = SSN;
+    public boolean setSSN(String SSN) {
+        if (!SSN.trim().equals("")) {
+            this.SSN = SSN;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public void addBoat(Boat boat) {

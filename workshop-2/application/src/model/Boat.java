@@ -40,32 +40,56 @@ public class Boat {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public boolean setId(int id) {
+        if (id > 0) {
+            this.id = id;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public boolean setType(String type) {
+        if (!type.trim().equals("")) {
+            this.type = type;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public int getLength() {
         return length;
     }
 
-    public void setLength(int length) {
-        this.length = length;
+    public boolean setLength(int length) {
+        if (length > 0) {
+            this.length = length;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public boolean setName(String name) {
+        if (!name.equals("")) {
+            this.name = name;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public String toString() {

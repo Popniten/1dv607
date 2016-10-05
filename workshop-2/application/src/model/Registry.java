@@ -47,10 +47,6 @@ public class Registry {
         return valid;
     }
 
-    /*public String registerMember(Member newMember) {
-        return this.db.updateDatabase(this.db.getMemberQuery("insert", newMember));
-    }*/
-
     private void saveFetchedMembers(ResultSet result) {
         try {
             this.members = new ArrayList<>();
