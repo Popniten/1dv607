@@ -1,25 +1,27 @@
 package view;
 
 public class GUIConsole {
-    private Menu menu;
+    private MainMenu menu;
 
     public GUIConsole() {
-        menu = new Menu();
+
+        menu = new MainMenu();
     }
 
     public void run() {
-        System.out.println(menu.getTitleBar());
-        System.out.println(menu.getMainMenu());
+        menu.printTitleBar();
+        while(menu.applicationIsRunning()) {
+            menu.printMainMenu();
 
-        int choice = Input.getInt();
-        while(choice != 0) {
-//            Input.clearBuffer();
+            // TODO: Split up MenuOptions methods for easier/clearer use.
+            // TODO: Main loop in MenuOptions-class?
+            // TODO: GUIConsole content could go into main?
+            // TODO: MenuOptions should be called GUIConsole?
 
-            System.out.println(menu.mainMenuRoute(choice));
-            Input.waitForEnterKey();
-            System.out.println(menu.getSeparator() + menu.getMainMenu());
-            choice = Input.getInt();
-
+            // TODO: MainMenu class.
+            // TODO: Input class error handling.
+            // TODO: MenuRouter class.
+            // TODO: Output/ListOutput/SubMenu class.
         }
     }
 
