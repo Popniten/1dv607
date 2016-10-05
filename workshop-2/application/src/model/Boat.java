@@ -12,7 +12,7 @@ public class Boat {
     private String name;
 
     public enum BoatType {
-        Sailboat, Motorsailer, Canoe, Other
+        SAILBOAT, MOTORSAILER, CANOE, OTHER
     }
 
     public Boat(BoatType type, int length, String name) {
