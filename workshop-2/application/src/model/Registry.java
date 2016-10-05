@@ -88,16 +88,21 @@ public class Registry {
         return members;
     }
 
-    public String addMember(Member mem) {
-        return this.db.updateDatabase(this.db.getMemberQuery("insert", mem));
+    public void addMember(Member mem) {
+        try {
+            this.db.updateDatabase(this.db.getMemberQuery("insert", mem));
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
-    public String updateMember(Member mem) {
+    public void updateMember(Member mem) {
         if (isMember(mem.getSSN())) {
-            return this.db.updateDatabase(this.db.getMemberQuery("update", mem));
-        }
-        else {
-            return null;
+            try {
+                this.db.updateDatabase(this.db.getMemberQuery("update", mem));
+            } catch (Exception e) {
+                throw e;
+            }
         }
     }
 

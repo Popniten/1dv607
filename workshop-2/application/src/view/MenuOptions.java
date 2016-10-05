@@ -23,7 +23,12 @@ class MenuOptions {
         System.out.print("Enter SSN: ");
         String ssn = Input.getString();
 
-        registry.addMember(new Member(fName, lName, ssn));
+        try {
+            registry.addMember(new Member(fName, lName, ssn));
+            System.out.println("Created member " + fName + " " + lName);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
@@ -42,15 +47,21 @@ class MenuOptions {
             System.out.print("Enter last name (" + m.getLastname() + "): ");
             String lName = Input.getString();
 
-            if (!fName.equals("")) {
+            // Use existing name if name fields are empty.
+            if (!isEmpty(fName)) {
                 m.setFirstname(fName);
             }
 
-            if(!lName.equals("")) {
+            if(!isEmpty(lName)) {
                 m.setLastname(lName);
             }
 
-            registry.updateMember(m);
+            try {
+                registry.updateMember(m);
+                System.out.println("Updated member " + m.getFirstname() + " " + m.getLastname());
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         } else {
             System.out.println("That member does not exist!");
         }
@@ -72,7 +83,7 @@ class MenuOptions {
 
             if (answer.equals("y")) {
                 registry.removeMember(m);
-                System.out.println("Deleting member " + m.getFirstname());
+                System.out.println("Deleting member " + m.getFirstname() + " " + m.getLastname());
             }
         } else {
             System.out.println("That member does not exist!");
@@ -271,5 +282,9 @@ class MenuOptions {
     private String boatTypeOutput(Boat.BoatType b) {
         String str = b.toString().toLowerCase();
         return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
+
+    private boolean isEmpty(String s) {
+        return s == null || s.trim().isEmpty();
     }
 }

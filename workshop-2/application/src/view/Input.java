@@ -14,7 +14,13 @@ class Input {
      * @return int The input from the user.
      */
     static int getInt() {
-        int i = input.nextInt();
+        // TODO: Get valid integer choices as arguments.
+        int i = -1;
+        try {
+            i = input.nextInt();
+        } catch (Exception e) {
+
+        }
         clearBuffer();
         return i;
     }

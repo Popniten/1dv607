@@ -44,13 +44,12 @@ public class Member {
         return firstname;
     }
 
-    public boolean setFirstname(String firstname) {
+    public void setFirstname(String firstname) {
         if (!firstname.trim().equals("")) {
             this.firstname = firstname;
-            return true;
         }
         else {
-            return false;
+            throw new IllegalArgumentException("First name cannot be empty.");
         }
     }
 
@@ -58,13 +57,12 @@ public class Member {
         return lastname;
     }
 
-    public boolean setLastname(String lastname) {
+    public void setLastname(String lastname) {
         if (!lastname.trim().equals("")) {
             this.lastname = lastname;
-            return true;
         }
         else {
-            return false;
+            throw new IllegalArgumentException("Last name cannot be empty.");
         }
     }
 
@@ -72,13 +70,12 @@ public class Member {
         return SSN;
     }
 
-    public boolean setSSN(String SSN) {
+    private void setSSN(String SSN) {
         if (!SSN.trim().equals("")) {
             this.SSN = SSN;
-            return true;
         }
         else {
-            return false;
+            throw new IllegalArgumentException("Social security number cannot be empty.");
         }
     }
 
