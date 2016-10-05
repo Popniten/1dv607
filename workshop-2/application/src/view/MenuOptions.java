@@ -285,6 +285,9 @@ class MenuOptions {
         return b;
     }
 
+    /*
+     * Checks if a string is empty or not.
+     */
     private boolean isEmpty(String s) {
         return s == null || s.trim().isEmpty();
     }

@@ -3,14 +3,20 @@ package model;
 import java.sql.*;
 
 /**
- * Created by kitty on 9/30/16.
+ *
  */
 public class Database {
 
     private Connection c = null;
     private Statement stmt = null;
 
-    protected String getMemberQuery(String command, Member mem) {
+    /**
+     *
+     * @param command
+     * @param mem
+     * @return
+     */
+    String getMemberQuery(String command, Member mem) {
         String sql = "";
         switch(command) {
             case "insert":
@@ -35,26 +41,51 @@ public class Database {
         return sql;
     }
 
-    protected String getMemberQuery() {
+    /**
+     *
+     * @return
+     */
+    String getMemberQuery() {
         return "SELECT * FROM Member";
     }
 
-    protected String getMemberQuery(String ssn) {
+    /**
+     *
+     * @param ssn
+     * @return
+     */
+    String getMemberQuery(String ssn) {
         return "SELECT * FROM Member WHERE ssn = '" + ssn + "'";
     }
 
-
-    protected String getMemberBoatsQuery(Member mem) {
+    /**
+     *
+     * @param mem
+     * @return
+     */
+    String getMemberBoatsQuery(Member mem) {
         return "SELECT * FROM Boat WHERE owner = '" + mem.getSSN() + "'";
     }
 
-    protected String getInsertBoatQuery(String ownerSsn, Boat boat) {
+    /**
+     *
+     * @param ownerSsn
+     * @param boat
+     * @return
+     */
+    String getInsertBoatQuery(String ownerSsn, Boat boat) {
         return "INSERT INTO Boat (type, name, length, owner) VALUES " +
                 "('" + boat.getType() + "', '" + boat.getName() + "', '" +
                 boat.getLength() + "', '" + ownerSsn + "')";
     }
 
-    protected String getBoatQuery(String command, Boat boat) {
+    /**
+     *
+     * @param command
+     * @param boat
+     * @return
+     */
+    String getBoatQuery(String command, Boat boat) {
         String sql = "";
         switch(command) {
             case "insert":
@@ -81,10 +112,13 @@ public class Database {
         return sql;
     }
 
-    /*
-    Returns ResultSet if success, null if not
+    /**
+     * Returns ResultSet if success, null if not
+     *
+     * @param sql
+     * @return
      */
-    protected ResultSet selectFromDatabase(String sql) {
+    ResultSet selectFromDatabase(String sql) {
         ResultSet result = null;
         this.connectToDatabase();
 
@@ -99,10 +133,13 @@ public class Database {
         return result;
     }
 
-    /*
-    Returns null if update was sucessful
+    /**
+     * Returns null if update was sucessful
+     *
+     * @param sql
+     * @return
      */
-    protected String updateDatabase(String sql) {
+    String updateDatabase(String sql) {
         this.connectToDatabase();
 
         try {
@@ -115,6 +152,9 @@ public class Database {
         }
     }
 
+    /*
+     *
+     */
     private boolean connectToDatabase() {
         if(isConnectionClosed()) {
             try {
@@ -132,6 +172,9 @@ public class Database {
         }
     }
 
+    /*
+     *
+     */
     private boolean isConnectionClosed() {
         if (this.c != null) {
             //check if the connection is closed
@@ -146,7 +189,10 @@ public class Database {
         }
     }
 
-    protected void closeDatabaseConnection() {
+    /**
+     *
+     */
+    void closeDatabaseConnection() {
         if (this.c != null) {
             try {
                 this.stmt.close();

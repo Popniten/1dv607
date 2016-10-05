@@ -5,23 +5,32 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Created by kitty on 9/30/16.
+ *
  */
 public class Registry {
     Database db;
     private ArrayList<Member> members;
 
+    /**
+     *
+     */
     public Registry() {
         this.db = new Database();
         members = new ArrayList<>();
     }
 
+    /*
+     *
+     */
     private void fetchAllMembers() {
         ResultSet result = this.db.selectFromDatabase(this.db.getMemberQuery());
 
         this.saveFetchedMembers(result);
     }
 
+    /*
+     *
+     */
     private boolean fetchMember(String ssn) {
         ResultSet result = this.db.selectFromDatabase(this.db.getMemberQuery(ssn));
         this.saveFetchedMembers(result);
@@ -29,6 +38,9 @@ public class Registry {
         return isMember(ssn);
     }
 
+    /*
+     *
+     */
     private boolean isMember(String ssn) {
         boolean valid = false;
         ResultSet result = this.db.selectFromDatabase(this.db.getMemberQuery(ssn));
@@ -47,6 +59,9 @@ public class Registry {
         return valid;
     }
 
+    /*
+     *
+     */
     private void saveFetchedMembers(ResultSet result) {
         try {
             this.members = new ArrayList<>();
@@ -65,6 +80,9 @@ public class Registry {
         }
     }
 
+    /*
+     *
+     */
     private void addMembersBoats(Member mem) {
         try {
             ResultSet result = this.db.selectFromDatabase(this.db.getMemberBoatsQuery(mem));
@@ -79,6 +97,10 @@ public class Registry {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Member> getMembers() {
         this.fetchAllMembers();
         ArrayList<Member> members = new ArrayList<>();
@@ -88,6 +110,10 @@ public class Registry {
         return members;
     }
 
+    /**
+     *
+     * @param mem
+     */
     public void addMember(Member mem) {
         try {
             this.db.updateDatabase(this.db.getMemberQuery("insert", mem));
@@ -96,6 +122,10 @@ public class Registry {
         }
     }
 
+    /**
+     *
+     * @param mem
+     */
     public void updateMember(Member mem) {
         if (isMember(mem.getSSN())) {
             try {
@@ -106,6 +136,11 @@ public class Registry {
         }
     }
 
+    /**
+     *
+     * @param mem
+     * @return
+     */
     public String removeMember(Member mem) {
         if (isMember(mem.getSSN())) {
             return this.db.updateDatabase(this.db.getMemberQuery("delete", mem));
@@ -115,8 +150,11 @@ public class Registry {
         }
     }
 
-    /*
-        Returns a member if found, null if not
+    /**
+     * Returns a member if found, null if not
+     *
+     * @param ssn
+     * @return
      */
     public Member getMember(String ssn) {
         if (this.fetchMember(ssn)) {
@@ -125,9 +163,12 @@ public class Registry {
         return null;
     }
 
-    /*
-        Boat functions
-    */
+    /**
+     *
+     * @param ownerSsn
+     * @param boat
+     * @return
+     */
     public String addBoat(String ownerSsn, Boat boat) {
         if(this.fetchMember(ownerSsn)) {
             return this.db.updateDatabase(this.db.getInsertBoatQuery(ownerSsn, boat));
@@ -138,10 +179,20 @@ public class Registry {
 
     }
 
+    /**
+     *
+     * @param boat
+     * @return
+     */
     public String updateBoat(Boat boat) {
         return this.db.updateDatabase(this.db.getBoatQuery("update", boat));
     }
 
+    /**
+     *
+     * @param boat
+     * @return
+     */
     public String removeBoat(Boat boat) {
         return this.db.updateDatabase(this.db.getBoatQuery("delete", boat));
     }

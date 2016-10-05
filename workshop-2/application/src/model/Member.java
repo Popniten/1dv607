@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 /**
- * Created by popniten on 2016-09-21.
+ *
  */
 public class Member {
     //TODO: add validation to setters
@@ -12,6 +12,12 @@ public class Member {
     private String SSN;
     private ArrayList<Boat> boats;
 
+    /**
+     *
+     * @param firstname
+     * @param lastname
+     * @param SSN
+     */
     public Member(String firstname, String lastname, String SSN) {
         this.boats = new ArrayList<>();
         setFirstname(firstname);
@@ -19,7 +25,11 @@ public class Member {
         setSSN(SSN);
     }
 
-    /*copy constructor*/
+    /**
+     * copy constructor
+     *
+     * @param that
+     */
     public Member(Member that) {
         this.boats = that.getBoats();
         this.setLastname(that.getLastname());
@@ -27,10 +37,18 @@ public class Member {
         this.setSSN(that.getSSN());
     }
 
+    /**
+     *
+     * @return
+     */
     public Member clone() {
         return new Member(this);
     }
 
+    /**
+     *
+     * @return
+     */
     public String toString() {
         String str = "\n\n" + this.getSSN() + ": " + this.getFirstname() + " " + this.getLastname() + "\n";
 
@@ -40,10 +58,18 @@ public class Member {
         return str;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFirstname() {
         return firstname;
     }
 
+    /**
+     *
+     * @param firstname
+     */
     public void setFirstname(String firstname) {
         if (!firstname.trim().equals("")) {
             this.firstname = firstname;
@@ -53,10 +79,18 @@ public class Member {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public String getLastname() {
         return lastname;
     }
 
+    /**
+     *
+     * @param lastname
+     */
     public void setLastname(String lastname) {
         if (!lastname.trim().equals("")) {
             this.lastname = lastname;
@@ -66,10 +100,17 @@ public class Member {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public String getSSN() {
         return SSN;
     }
 
+    /*
+     *
+     */
     private void setSSN(String SSN) {
         if (!SSN.trim().equals("")) {
             this.SSN = SSN;
@@ -79,10 +120,18 @@ public class Member {
         }
     }
 
+    /**
+     *
+     * @param boat
+     */
     public void addBoat(Boat boat) {
         this.boats.add(boat);
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Boat> getBoats() {
         ArrayList<Boat> boats = new ArrayList<>();
 
@@ -91,6 +140,4 @@ public class Member {
         }
         return boats;
     }
-
-
 }
