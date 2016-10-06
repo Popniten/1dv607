@@ -18,13 +18,17 @@ Enjoy!
 
 ## Grade 2 - Submission 1
 
-### UML class diagram
+### Diagrams
+
+#### UML class diagram
 
 ![UML Class Diagram](WS2-ClassDiagram-FirstSubmission.png)
 
-### Sequence diagrams
+#### Input Sequence diagrams - Register Member
 
-...
+![Register Member](WS2-RegisterMember.png)
 
-...
+#### Output Sequence diagrams - View Member
+
+![View Member](WS2-ViewMember.png)
 
