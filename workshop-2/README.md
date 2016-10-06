@@ -8,7 +8,7 @@ The `application` folder contains the source code for the application and the `r
 
 ### Running the application
 
-Download the files in the `release` folder or this zip. Use a terminal or command prompt and navigate to where to stored/unzipped them and run the jar-file:
+Download the files in the `release` folder or [this zip](MemberRegistry-1.0.tar.gz). Use a terminal or command prompt and navigate to where to stored/unzipped them and run the jar-file:
 
 ``` bash
 $ java -jar MemberRegistry.jar
