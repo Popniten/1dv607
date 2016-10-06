@@ -3,14 +3,21 @@ package model;
 import java.sql.*;
 
 /**
- * Created by kitty on 9/30/16.
+ * A class to handle the SQLite database.
  */
 public class Database {
 
     private Connection c = null;
     private Statement stmt = null;
 
-    protected String getMemberQuery(String command, Member mem) {
+    /**
+     * A method to get SQL queries to send to the database.
+     *
+     * @param command SQL command.
+     * @param mem Member to handle.
+     * @return SQL query.
+     */
+    String getMemberQuery(String command, Member mem) {
         String sql = "";
         switch(command) {
             case "insert":
@@ -35,32 +42,68 @@ public class Database {
         return sql;
     }
 
-    protected String getMemberQuery() {
+    /**
+     * Select all members.
+     *
+     * @return Query.
+     */
+    String getMemberQuery() {
         return "SELECT * FROM Member";
     }
 
-    protected String getMemberQuery(String ssn) {
+    /**
+     * Select a specific member.
+     *
+     * @param ssn Member to select.
+     * @return Query.
+     */
+    String getMemberQuery(String ssn) {
         return "SELECT * FROM Member WHERE ssn = '" + ssn + "'";
     }
 
-    protected String getMemberBoatsQuery(Member mem) {
+    /**
+     * Select boats from database.
+     *
+     * @param mem The members boats.
+     * @return Query.
+     */
+    String getMemberBoatsQuery(Member mem) {
         return "SELECT * FROM Boat WHERE owner = '" + mem.getSSN() + "'";
     }
 
-    protected String getBoatQuery(String command, Boat boat) {
+    /**
+     * Insert boat to database.
+     *
+     * @param ownerSsn Owner ssn.
+     * @param boat Boat to insert.
+     * @return Query.
+     */
+    String getInsertBoatQuery(String ownerSsn, Boat boat) {
+        return "INSERT INTO Boat (type, name, length, owner) VALUES " +
+                "('" + boat.getType() + "', '" + boat.getName() + "', '" +
+                boat.getLength() + "', '" + ownerSsn + "')";
+    }
+
+    /**
+     * Boat queries for database.
+     *
+     * @param command SQL command.
+     * @param boat Boat
+     * @return Query.
+     */
+    String getBoatQuery(String command, Boat boat) {
         String sql = "";
         switch(command) {
             case "insert":
-                sql = "INSERT INTO Boat (type, name, length, owner) VALUES " +
+                sql = "INSERT INTO Boat (type, name, length) VALUES " +
                         "('" + boat.getType() + "', '" + boat.getName() + "', '" +
-                            boat.getLength() + "', '" + boat.getOwner()+ "')";
+                            boat.getLength() + "')";
                 break;
             case "update":
                 sql = "UPDATE Boat " +
                         "SET type = '" + boat.getType() + "', " +
                         "name = '" + boat.getName() + "', " +
-                        "length = '" + boat.getLength() + "', " +
-                        "owner = '" + boat.getOwner() + "' " +
+                        "length = '" + boat.getLength() + "' " +
                         "WHERE id = '" + boat.getId() + "'";
                 break;
             case "select":
@@ -75,7 +118,13 @@ public class Database {
         return sql;
     }
 
-    protected ResultSet selectFromDatabase(String sql) {
+    /**
+     * Returns ResultSet if success, null if not
+     *
+     * @param sql Query to run in database.
+     * @return ResultSet|Null.
+     */
+    ResultSet selectFromDatabase(String sql) {
         ResultSet result = null;
         this.connectToDatabase();
 
@@ -83,35 +132,37 @@ public class Database {
             this.stmt = this.c.createStatement();
             result = stmt.executeQuery(sql);
 
-            //stmt.close();
-            //return result;
         } catch(Exception e) {
-            e.printStackTrace();
-            //return null;
+            result = null;
         }
 
-        //this.closeDatabaseConnection();
         return result;
     }
 
-    protected String updateDatabase(String sql) {
+    /**
+     * Returns null if update was sucessful
+     *
+     * @param sql Query to run.
+     * @return Null if successful.
+     */
+    String updateDatabase(String sql) {
         this.connectToDatabase();
 
         try {
             this.stmt = this.c.createStatement();
             stmt.executeUpdate(sql);
 
-            //stmt.close();
             return null;
         } catch(Exception e) {
-            //e.printStackTrace();
             return e.getMessage();
         }
     }
 
+    /*
+     *
+     */
     private boolean connectToDatabase() {
         if(isConnectionClosed()) {
-            System.out.println("connection...");
             try {
                 Class.forName("org.sqlite.JDBC");
                 this.c = DriverManager.getConnection("jdbc:sqlite:data/MemberRegistry.db");
@@ -127,6 +178,9 @@ public class Database {
         }
     }
 
+    /*
+     *
+     */
     private boolean isConnectionClosed() {
         if (this.c != null) {
             //check if the connection is closed
@@ -141,11 +195,12 @@ public class Database {
         }
     }
 
-    public void closeDatabaseConnection() {
-        System.out.println("closing connection...");
+    /**
+     * Close the database connection.
+     */
+    void closeDatabaseConnection() {
         if (this.c != null) {
             try {
-                //this.c.commit();
                 this.stmt.close();
                 this.c.close();
             } catch (SQLException e) {

@@ -2,16 +2,34 @@ package view;
 
 import java.util.Scanner;
 
-public class Input {
+/**
+ * A static class to simplify input.
+ */
+class Input {
     private static Scanner input = new Scanner(System.in);
 
-    public static int getInt() {
-        int i = input.nextInt();
-        input = new Scanner(System.in);
+    /**
+     * Gets an integer input from the user.
+     *
+     * @return int The input from the user.
+     */
+    static int getInt() {
+        // TODO: Get valid integer choices as arguments.
+        int i = -1;
+        try {
+            i = input.nextInt();
+        } catch (Exception e) {
+
+        }
+        clearBuffer();
         return i;
     }
 
-    public static void waitForEnterKey() {
+    /**
+     * A method to pause program until the
+     * user presses the enter key.
+     */
+    static void waitForEnterKey() {
         try {
             System.in.read();
         } catch (Exception e) {
@@ -19,13 +37,21 @@ public class Input {
         }
     }
 
-    public static String getString() {
+    /**
+     * Gets a string input from the user.
+     *
+     * @return String The input from the user.
+     */
+    static String getString() {
         String s = input.nextLine();
-        input = new Scanner(System.in);
+        clearBuffer();
         return s;
     }
 
-    public static void clearBuffer() {
+    /**
+     * Clears the input buffer.
+     */
+    private static void clearBuffer() {
         input = new Scanner(System.in);
     }
 }
