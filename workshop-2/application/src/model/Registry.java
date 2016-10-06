@@ -5,14 +5,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- *
+ * A registry to hold members and their boats.
  */
 public class Registry {
     Database db;
     private ArrayList<Member> members;
 
     /**
-     *
+     * Constructor.
      */
     public Registry() {
         this.db = new Database();
@@ -98,8 +98,9 @@ public class Registry {
     }
 
     /**
+     * Get all members from Database.
      *
-     * @return
+     * @return ArrayList of Members.
      */
     public ArrayList<Member> getMembers() {
         this.fetchAllMembers();
@@ -111,8 +112,9 @@ public class Registry {
     }
 
     /**
+     * Add member to registry.
      *
-     * @param mem
+     * @param mem Member to add.
      */
     public void addMember(Member mem) {
         try {
@@ -123,8 +125,9 @@ public class Registry {
     }
 
     /**
+     * Update member in registry (and database).
      *
-     * @param mem
+     * @param mem Member to update.
      */
     public void updateMember(Member mem) {
         if (isMember(mem.getSSN())) {
@@ -137,9 +140,10 @@ public class Registry {
     }
 
     /**
+     * Remove member from registry.
      *
-     * @param mem
-     * @return
+     * @param mem Member to remove.
+     * @return Null if unsuccessful.
      */
     public String removeMember(Member mem) {
         if (isMember(mem.getSSN())) {
@@ -153,8 +157,8 @@ public class Registry {
     /**
      * Returns a member if found, null if not
      *
-     * @param ssn
-     * @return
+     * @param ssn Member to get.
+     * @return Member|Null.
      */
     public Member getMember(String ssn) {
         if (this.fetchMember(ssn)) {
@@ -164,10 +168,11 @@ public class Registry {
     }
 
     /**
+     * Add a boat to a member.
      *
-     * @param ownerSsn
-     * @param boat
-     * @return
+     * @param ownerSsn Member that owns the boat.
+     * @param boat Boat to add.
+     * @return String.
      */
     public String addBoat(String ownerSsn, Boat boat) {
         if(this.fetchMember(ownerSsn)) {
@@ -180,18 +185,20 @@ public class Registry {
     }
 
     /**
+     * Update a boat.
      *
-     * @param boat
-     * @return
+     * @param boat Boat to update.
+     * @return String.
      */
     public String updateBoat(Boat boat) {
         return this.db.updateDatabase(this.db.getBoatQuery("update", boat));
     }
 
     /**
+     * Remove a boat.
      *
-     * @param boat
-     * @return
+     * @param boat Boat to remove.
+     * @return String.
      */
     public String removeBoat(Boat boat) {
         return this.db.updateDatabase(this.db.getBoatQuery("delete", boat));

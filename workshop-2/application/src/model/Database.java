@@ -3,7 +3,7 @@ package model;
 import java.sql.*;
 
 /**
- *
+ * A class to handle the SQLite database.
  */
 public class Database {
 
@@ -11,10 +11,11 @@ public class Database {
     private Statement stmt = null;
 
     /**
+     * A method to get SQL queries to send to the database.
      *
-     * @param command
-     * @param mem
-     * @return
+     * @param command SQL command.
+     * @param mem Member to handle.
+     * @return SQL query.
      */
     String getMemberQuery(String command, Member mem) {
         String sql = "";
@@ -42,36 +43,40 @@ public class Database {
     }
 
     /**
+     * Select all members.
      *
-     * @return
+     * @return Query.
      */
     String getMemberQuery() {
         return "SELECT * FROM Member";
     }
 
     /**
+     * Select a specific member.
      *
-     * @param ssn
-     * @return
+     * @param ssn Member to select.
+     * @return Query.
      */
     String getMemberQuery(String ssn) {
         return "SELECT * FROM Member WHERE ssn = '" + ssn + "'";
     }
 
     /**
+     * Select boats from database.
      *
-     * @param mem
-     * @return
+     * @param mem The members boats.
+     * @return Query.
      */
     String getMemberBoatsQuery(Member mem) {
         return "SELECT * FROM Boat WHERE owner = '" + mem.getSSN() + "'";
     }
 
     /**
+     * Insert boat to database.
      *
-     * @param ownerSsn
-     * @param boat
-     * @return
+     * @param ownerSsn Owner ssn.
+     * @param boat Boat to insert.
+     * @return Query.
      */
     String getInsertBoatQuery(String ownerSsn, Boat boat) {
         return "INSERT INTO Boat (type, name, length, owner) VALUES " +
@@ -80,10 +85,11 @@ public class Database {
     }
 
     /**
+     * Boat queries for database.
      *
-     * @param command
-     * @param boat
-     * @return
+     * @param command SQL command.
+     * @param boat Boat
+     * @return Query.
      */
     String getBoatQuery(String command, Boat boat) {
         String sql = "";
@@ -115,8 +121,8 @@ public class Database {
     /**
      * Returns ResultSet if success, null if not
      *
-     * @param sql
-     * @return
+     * @param sql Query to run in database.
+     * @return ResultSet|Null.
      */
     ResultSet selectFromDatabase(String sql) {
         ResultSet result = null;
@@ -136,8 +142,8 @@ public class Database {
     /**
      * Returns null if update was sucessful
      *
-     * @param sql
-     * @return
+     * @param sql Query to run.
+     * @return Null if successful.
      */
     String updateDatabase(String sql) {
         this.connectToDatabase();
@@ -190,7 +196,7 @@ public class Database {
     }
 
     /**
-     *
+     * Close the database connection.
      */
     void closeDatabaseConnection() {
         if (this.c != null) {

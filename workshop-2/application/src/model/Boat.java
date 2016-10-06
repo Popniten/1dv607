@@ -1,7 +1,7 @@
 package model;
 
 /**
- *
+ * A representation of a boat.
  */
 public class Boat {
     private int id;
@@ -10,17 +10,18 @@ public class Boat {
     private String name;
 
     /**
-     *
+     * Available boat types.
      */
     public enum BoatType {
         Sailboat, Motorsailer, Canoe, Other
     }
 
     /**
+     * Constructor.
      *
-     * @param type
-     * @param length
-     * @param name
+     * @param type Boat type.
+     * @param length Boats length.
+     * @param name Boats name.
      */
     public Boat(BoatType type, int length, String name) {
         this.setType(type);
@@ -29,11 +30,12 @@ public class Boat {
     }
 
     /**
+     * Alternate constructor.
      *
-     * @param id
-     * @param type
-     * @param length
-     * @param name
+     * @param id Boats database id.
+     * @param type Boat type.
+     * @param length Boats length.
+     * @param name Boats name.
      */
     public Boat(int id, BoatType type, int length, String name) {
         this.setId(id);
@@ -43,9 +45,9 @@ public class Boat {
     }
 
     /**
-     * Copy constructor
+     * Constructor for copying a boat.
      *
-     * @param that
+     * @param that Boat to copy.
      */
     public Boat(Boat that) {
         this.setId(that.getId());
@@ -55,27 +57,30 @@ public class Boat {
     }
 
     /**
+     * Clone a boat.
      *
-     * @return
+     * @return Cloned boat.
      */
     public Boat clone() {
         return new Boat(this);
     }
 
     /**
+     * Return database id.
      *
-     * @return
+     * @return Database id.
      */
-    public int getId() {
+    int getId() {
         return id;
     }
 
     /**
+     * Set database id.
      *
-     * @param id
-     * @return
+     * @param id Id
+     * @return True if successful.
      */
-    public boolean setId(int id) {
+    boolean setId(int id) {
         if (id > 0) {
             this.id = id;
             return true;
@@ -86,17 +91,19 @@ public class Boat {
     }
 
     /**
+     * Return boat type.
      *
-     * @return
+     * @return Boat type.
      */
     public BoatType getType() {
         return type;
     }
 
     /**
+     * Set boats type.
      *
-     * @param type
-     * @return
+     * @param type The boat type.
+     * @return True.
      */
     public boolean setType(BoatType type) {
         this.type = type;
@@ -104,16 +111,19 @@ public class Boat {
     }
 
     /**
+     * Get the boats length.
      *
-     * @return
+     * @return Boats length.
      */
     public int getLength() {
         return length;
     }
 
     /**
+     * Set the boats length.
      *
-     * @param length
+     * @param length The boats length.
+     * @throws IllegalArgumentException If length is zero or less.
      */
     public void setLength(int length) {
         if (length > 0) {
@@ -125,16 +135,19 @@ public class Boat {
     }
 
     /**
+     * Get the boats name.
      *
-     * @return
+     * @return Name
      */
     public String getName() {
         return name;
     }
 
     /**
+     * Set the boats name.
      *
-     * @param name
+     * @param name Name.
+     * @throws IllegalArgumentException If the boats name is empty.
      */
     public void setName(String name) {
         if (!name.equals("")) {
@@ -146,8 +159,9 @@ public class Boat {
     }
 
     /**
+     * String representation of a boat.
      *
-     * @return
+     * @return String.
      */
     public String toString() {
         return this.getName() + ", " + this.getType() + ", " + this.getLength() + "cm.";

@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 /**
- *
+ * A class to represent a member.
  */
 public class Member {
     //TODO: add validation to setters
@@ -13,10 +13,11 @@ public class Member {
     private ArrayList<Boat> boats;
 
     /**
+     * Constructor.
      *
-     * @param firstname
-     * @param lastname
-     * @param SSN
+     * @param firstname Member first name.
+     * @param lastname Member last name.
+     * @param SSN Members social security number.
      */
     public Member(String firstname, String lastname, String SSN) {
         this.boats = new ArrayList<>();
@@ -26,9 +27,9 @@ public class Member {
     }
 
     /**
-     * copy constructor
+     * Copy constructor
      *
-     * @param that
+     * @param that Member to copy.
      */
     public Member(Member that) {
         this.boats = that.getBoats();
@@ -38,16 +39,18 @@ public class Member {
     }
 
     /**
+     * Clones a member.
      *
-     * @return
+     * @return Member Clone.
      */
     public Member clone() {
         return new Member(this);
     }
 
     /**
+     * String representation of a member.
      *
-     * @return
+     * @return A string.
      */
     public String toString() {
         String str = "\n\n" + this.getSSN() + ": " + this.getFirstname() + " " + this.getLastname() + "\n";
@@ -59,16 +62,18 @@ public class Member {
     }
 
     /**
+     * Get the members first name.
      *
-     * @return
+     * @return First name.
      */
     public String getFirstname() {
         return firstname;
     }
 
     /**
+     * Set the members first name.
      *
-     * @param firstname
+     * @param firstname New first name.
      */
     public void setFirstname(String firstname) {
         if (!firstname.trim().equals("")) {
@@ -80,16 +85,18 @@ public class Member {
     }
 
     /**
+     * Get the members last name.
      *
-     * @return
+     * @return Last name.
      */
     public String getLastname() {
         return lastname;
     }
 
     /**
+     * Set the members last name.
      *
-     * @param lastname
+     * @param lastname New last name.
      */
     public void setLastname(String lastname) {
         if (!lastname.trim().equals("")) {
@@ -101,8 +108,9 @@ public class Member {
     }
 
     /**
+     * Get the members social security number.
      *
-     * @return
+     * @return SSN.
      */
     public String getSSN() {
         return SSN;
@@ -121,16 +129,18 @@ public class Member {
     }
 
     /**
+     * Adds a boat to a member.
      *
-     * @param boat
+     * @param boat The Boat to add.
      */
     public void addBoat(Boat boat) {
         this.boats.add(boat);
     }
 
     /**
+     * Gets all members boats.
      *
-     * @return
+     * @return Boats.
      */
     public ArrayList<Boat> getBoats() {
         ArrayList<Boat> boats = new ArrayList<>();
