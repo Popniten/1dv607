@@ -15,9 +15,9 @@ class Database {
     public void getAllMembers() {}
     public void updateMember(String fName, String lName, String ssn, int id) {}
     public void deleteMember(String ssn) {}
-    public void insertBoat(String name, Boat.BoatType type, int ownerID) {}
+    public void insertBoat(String name, String type, int ownerID) {}
     public void getBoats() {}
-    public void updateBoat(String name, Boat.BoatType type, int ownerID, int boatID) {}
+    public void updateBoat(String name, String type, int ownerID, int boatID) {}
     public void deleteBoat(int boatID) {}
 
     /**
