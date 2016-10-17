@@ -10,6 +10,13 @@ class Database {
     private Connection c = null;
     private Statement stmt = null;
 
+    public void insertMember(String fName, String lName, String ssn) {}
+    public void updateMember(String fName, String lName, String ssn, int id) {}
+    public void deleteMember(String ssn) {}
+    public void insertBoat(String name, Boat.BoatType type, int ownerID) {}
+    public void updateBoat(String name, Boat.BoatType type, int ownerID, int boatID) {}
+    public void deleteBoat(int boatID) {}
+
     /**
      * A method to get SQL queries to send to the database.
      *
