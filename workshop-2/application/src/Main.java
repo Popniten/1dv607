@@ -1,3 +1,4 @@
+import model.Registry;
 import view.GUIConsole;
 
 /**
