@@ -19,84 +19,6 @@ public class Registry {
         members = new ArrayList<>();
     }
 
-    /*
-     *
-     */
-    private void fetchAllMembers() {
-        ResultSet result = this.db.selectFromDatabase(this.db.getMemberQuery());
-
-        this.saveFetchedMembers(result);
-    }
-
-    /*
-     *
-     */
-    private boolean fetchMember(String ssn) {
-        ResultSet result = this.db.selectFromDatabase(this.db.getMemberQuery(ssn));
-        this.saveFetchedMembers(result);
-
-        return isMember(ssn);
-    }
-
-    /*
-     *
-     */
-    private boolean isMember(String ssn) {
-        boolean valid = false;
-        ResultSet result = this.db.selectFromDatabase(this.db.getMemberQuery(ssn));
-        try {
-            if (result.next()) {
-                valid = true;
-            } else {
-                valid = false;
-            }
-        } catch (SQLException e) {
-            valid = false;
-        }
-        //done with fetches, close dbconnection
-        this.db.closeDatabaseConnection();
-
-        return valid;
-    }
-
-    /*
-     *
-     */
-    private void saveFetchedMembers(ResultSet result) {
-        try {
-            this.members = new ArrayList<>();
-            while(result.next()) {
-                Member tmp = new Member(result.getString("firstname"), result.getString("lastname"), result.getString("ssn"));
-
-                this.addMembersBoats(tmp);
-
-                this.members.add(tmp);
-            }
-
-            //done with fetches, close dbconnection
-            this.db.closeDatabaseConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /*
-     *
-     */
-    private void addMembersBoats(Member mem) {
-        try {
-            ResultSet result = this.db.selectFromDatabase(this.db.getMemberBoatsQuery(mem));
-
-            while(result.next()) {
-                Boat.BoatType type = Boat.BoatType.valueOf(result.getString("type"));
-                Boat tmp = new Boat(result.getInt("id"), type, result.getInt("length"), result.getString("name"));
-                mem.addBoat(tmp);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     /**
      * Get all members from Database.
      *
@@ -202,5 +124,83 @@ public class Registry {
      */
     public String removeBoat(Boat boat) {
         return this.db.updateDatabase(this.db.getBoatQuery("delete", boat));
+    }
+
+    /*
+     *
+     */
+    private void fetchAllMembers() {
+        ResultSet result = this.db.selectFromDatabase(this.db.getMemberQuery());
+
+        this.saveFetchedMembers(result);
+    }
+
+    /*
+     *
+     */
+    private boolean fetchMember(String ssn) {
+        ResultSet result = this.db.selectFromDatabase(this.db.getMemberQuery(ssn));
+        this.saveFetchedMembers(result);
+
+        return isMember(ssn);
+    }
+
+    /*
+     *
+     */
+    private boolean isMember(String ssn) {
+        boolean valid = false;
+        ResultSet result = this.db.selectFromDatabase(this.db.getMemberQuery(ssn));
+        try {
+            if (result.next()) {
+                valid = true;
+            } else {
+                valid = false;
+            }
+        } catch (SQLException e) {
+            valid = false;
+        }
+        //done with fetches, close dbconnection
+        this.db.closeDatabaseConnection();
+
+        return valid;
+    }
+
+    /*
+     *
+     */
+    private void saveFetchedMembers(ResultSet result) {
+        try {
+            this.members = new ArrayList<>();
+            while(result.next()) {
+                Member tmp = new Member(result.getString("firstname"), result.getString("lastname"), result.getString("ssn"));
+
+                this.addMembersBoats(tmp);
+
+                this.members.add(tmp);
+            }
+
+            //done with fetches, close dbconnection
+            this.db.closeDatabaseConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+     *
+     */
+    private void addMembersBoats(Member mem) {
+        try {
+            ResultSet result = this.db.selectFromDatabase(this.db.getMemberBoatsQuery(mem));
+
+            while(result.next()) {
+                Boat.BoatType type = Boat.BoatType.valueOf(result.getString("type"));
+                Boat tmp = new Boat(result.getInt("id"), type, result.getInt("length"), result.getString("name"));
+                mem.addBoat(tmp);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

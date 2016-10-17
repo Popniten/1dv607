@@ -6,7 +6,6 @@ import java.util.ArrayList;
  * A class to represent a member.
  */
 public class Member {
-    //TODO: add validation to setters
     private String firstname;
     private String lastname;
     private String SSN;
