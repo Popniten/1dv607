@@ -11,9 +11,12 @@ class Database {
     private Statement stmt = null;
 
     public void insertMember(String fName, String lName, String ssn) {}
+    public void getMember(String ssn) {}
+    public void getAllMembers() {}
     public void updateMember(String fName, String lName, String ssn, int id) {}
     public void deleteMember(String ssn) {}
     public void insertBoat(String name, Boat.BoatType type, int ownerID) {}
+    public void getBoats() {}
     public void updateBoat(String name, Boat.BoatType type, int ownerID, int boatID) {}
     public void deleteBoat(int boatID) {}
 
