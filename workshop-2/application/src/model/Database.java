@@ -5,7 +5,7 @@ import java.sql.*;
 /**
  * A class to handle the SQLite database.
  */
-public class Database {
+class Database {
 
     private Connection c = null;
     private Statement stmt = null;

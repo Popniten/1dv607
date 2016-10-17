@@ -21,8 +21,8 @@ public class Member {
      */
     public Member(String firstname, String lastname, String SSN) {
         this.boats = new ArrayList<>();
-        setFirstname(firstname);
-        setLastname(lastname);
+        this.setFirstname(firstname);
+        this.setLastname(lastname);
         setSSN(SSN);
     }
 

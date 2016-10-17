@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * A registry to hold members and their boats.
  */
 public class Registry {
-    Database db;
+    private Database db;
     private ArrayList<Member> members;
 
     /**
