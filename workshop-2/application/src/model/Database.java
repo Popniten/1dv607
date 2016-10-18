@@ -109,8 +109,21 @@ class Database {
         return this.selectFromDatabase(sql);
     }
 
-    void updateBoat(String name, String type, int ownerID, int boatID) {
-        String sql = "";
+    /**
+     * Updates a boats information in the database.
+     *
+     * @param name Boats name.
+     * @param type Boat type.
+     * @param length Boat length.
+     * @param boatID Boats ID.
+     */
+    void updateBoat(String name, String type, int length, int boatID) {
+        String sql = "UPDATE Boat " +
+                "SET type = '" + type + "', " +
+                "name = '" + name + "', " +
+                "length = '" + length + "' " +
+                "WHERE id = '" + boatID + "'";
+        this.updateDatabase(sql);
     }
 
     /**

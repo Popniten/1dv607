@@ -105,20 +105,18 @@ public class Registry {
      * Update a boat.
      *
      * @param boat Boat to update.
-     * @return String.
      */
-    public String updateBoat(Boat boat) {
-        return this.db.updateDatabase(this.db.getBoatQuery("update", boat));
+    public void updateBoat(Boat boat) {
+        this.db.updateBoat(boat.getName(), boat.getType().toString(), boat.getLength(), boat.getId());
     }
 
     /**
      * Remove a boat.
      *
      * @param boat Boat to remove.
-     * @return String.
      */
-    public String removeBoat(Boat boat) {
-        return this.db.updateDatabase(this.db.getBoatQuery("delete", boat));
+    public void removeBoat(Boat boat) {
+        this.db.deleteBoat(boat.getId());
     }
 
     /*
@@ -145,7 +143,7 @@ public class Registry {
      */
     private boolean isMember(String ssn) {
         boolean valid = false;
-        ResultSet result = this.db.selectFromDatabase(this.db.getMemberQuery(ssn));
+        ResultSet result = this.db.getMember(ssn);
         try {
             if (result.next()) {
                 valid = true;
