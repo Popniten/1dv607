@@ -5,7 +5,7 @@ import java.sql.*;
 /**
  * A class to handle the SQLite database.
  */
-class Database {
+class Database implements IStorage {
 
     private Connection c = null;
     private Statement stmt = null;
@@ -18,7 +18,7 @@ class Database {
      * @param lName Members last name.
      * @param ssn Members social security number.
      */
-    void insertMember(String fName, String lName, String ssn) {
+    public void insertMember(String fName, String lName, String ssn) {
         String sql = "INSERT INTO Member (firstname, lastname, ssn) VALUES ('"
                 + fName
                 + "', '"
@@ -36,7 +36,7 @@ class Database {
      * @param ssn The SSN of the member to fetch.
      * @return ResultSet.
      */
-    ResultSet getMember(String ssn) {
+    public ResultSet getMember(String ssn) {
         String sql = "SELECT * FROM Member WHERE ssn = '" + ssn + "'";
         return this.selectFromDatabase(sql);
     }
@@ -46,7 +46,7 @@ class Database {
      *
      * @return ResultSet of members.
      */
-    ResultSet getAllMembers() {
+    public ResultSet getAllMembers() {
         String sql = "SELECT * FROM Member";
         return this.selectFromDatabase(sql);
     }
@@ -58,7 +58,7 @@ class Database {
      * @param lName The members new last name.
      * @param ssn The SSN of the member to update.
      */
-    void updateMember(String fName, String lName, String ssn) {
+    public void updateMember(String fName, String lName, String ssn) {
         String sql = "UPDATE Member " +
                      "SET firstname = '" + fName + "', " +
                      "lastname = '" + lName + "' " +
@@ -71,7 +71,7 @@ class Database {
      *
      * @param ssn The SSN of the member to delete.
      */
-    void deleteMember(String ssn) {
+    public void deleteMember(String ssn) {
         String sql = "DELETE FROM Member WHERE ssn = '" + ssn + "'";
         this.updateDatabase(sql);
     }
@@ -84,7 +84,7 @@ class Database {
      * @param length Boats length.
      * @param ownerSSN Boat owners SSN.
      */
-    void insertBoat(String name, String type, int length, String ownerSSN) {
+    public void insertBoat(String name, String type, int length, String ownerSSN) {
         String sql = "INSERT INTO Boat (type, name, length, owner) VALUES "
                 + "('"
                 + type
@@ -104,7 +104,7 @@ class Database {
      * @param ownerSSN The member.
      * @return ResultSet of boats.
      */
-    ResultSet getMembersBoats(String ownerSSN) {
+    public ResultSet getMembersBoats(String ownerSSN) {
         String sql = "SELECT * FROM Boat WHERE owner = '" + ownerSSN + "'";
         return this.selectFromDatabase(sql);
     }
@@ -117,7 +117,7 @@ class Database {
      * @param length Boat length.
      * @param boatID Boats ID.
      */
-    void updateBoat(String name, String type, int length, int boatID) {
+    public void updateBoat(String name, String type, int length, int boatID) {
         String sql = "UPDATE Boat " +
                 "SET type = '" + type + "', " +
                 "name = '" + name + "', " +
@@ -131,126 +131,12 @@ class Database {
      *
      * @param boatID ID of the boat to delete.
      */
-    void deleteBoat(int boatID) {
+    public void deleteBoat(int boatID) {
         String sql = "DELETE FROM Boat WHERE id = '" + boatID + "'";
         this.updateDatabase(sql);
     }
 
-    /**
-     * A method to get SQL queries to send to the database.
-     *
-     * @param command SQL command.
-     * @param mem Member to handle.
-     * @return SQL query.
-     */
-    String getMemberQuery(String command, Member mem) {
-        String sql = "";
-        switch(command) {
-            case "insert":
-                sql = "INSERT INTO Member (firstname, lastname, ssn) VALUES " +
-                        "('" + mem.getFirstname() + "', '" + mem.getLastname() + "', '" + mem.getSSN() + "')";
-                break;
-            case "update":
-                sql = "UPDATE Member " +
-                        "SET firstname = '" + mem.getFirstname() + "', " +
-                        "lastname = '" + mem.getLastname() + "' " +
-                        "WHERE ssn = '" + mem.getSSN() + "'";
-                break;
-            case "select":
-                sql = "SELECT * FROM Member WHERE ssn = '" + mem.getSSN() + "'";
-                break;
-            case "delete":
-                sql = "DELETE FROM Member WHERE ssn = '" + mem.getSSN() + "'";
-                break;
-            default:
-                break;
-        }
-        return sql;
-    }
-
-    /**
-     * Select all members.
-     *
-     * @return Query.
-     */
-    String getMemberQuery() {
-        return "SELECT * FROM Member";
-    }
-
-    /**
-     * Select a specific member.
-     *
-     * @param ssn Member to select.
-     * @return Query.
-     */
-    String getMemberQuery(String ssn) {
-        return "SELECT * FROM Member WHERE ssn = '" + ssn + "'";
-    }
-
-    /**
-     * Select boats from database.
-     *
-     * @param mem The members boats.
-     * @return Query.
-     */
-    String getMemberBoatsQuery(Member mem) {
-        return "SELECT * FROM Boat WHERE owner = '" + mem.getSSN() + "'";
-    }
-
-    /**
-     * Insert boat to database.
-     *
-     * @param ownerSsn Owner ssn.
-     * @param boat Boat to insert.
-     * @return Query.
-     */
-    String getInsertBoatQuery(String ownerSsn, Boat boat) {
-        return "INSERT INTO Boat (type, name, length, owner) VALUES " +
-                "('" + boat.getType() + "', '" + boat.getName() + "', '" +
-                boat.getLength() + "', '" + ownerSsn + "')";
-    }
-
-    /**
-     * Boat queries for database.
-     *
-     * @param command SQL command.
-     * @param boat Boat
-     * @return Query.
-     */
-    String getBoatQuery(String command, Boat boat) {
-        String sql = "";
-        switch(command) {
-            case "insert":
-                sql = "INSERT INTO Boat (type, name, length) VALUES " +
-                        "('" + boat.getType() + "', '" + boat.getName() + "', '" +
-                            boat.getLength() + "')";
-                break;
-            case "update":
-                sql = "UPDATE Boat " +
-                        "SET type = '" + boat.getType() + "', " +
-                        "name = '" + boat.getName() + "', " +
-                        "length = '" + boat.getLength() + "' " +
-                        "WHERE id = '" + boat.getId() + "'";
-                break;
-            case "select":
-                sql = "SELECT * FROM Boat WHERE id = '" + boat.getId() + "'";
-                break;
-            case "delete":
-                sql = "DELETE FROM Boat WHERE id = '" + boat.getId() + "'";
-                break;
-            default:
-                break;
-        }
-        return sql;
-    }
-
-    /**
-     * Returns ResultSet if success, null if not
-     *
-     * @param sql Query to run in database.
-     * @return ResultSet|Null.
-     */
-    ResultSet selectFromDatabase(String sql) {
+    private ResultSet selectFromDatabase(String sql) {
         ResultSet result = null;
         this.connectToDatabase();
 
@@ -265,13 +151,7 @@ class Database {
         return result;
     }
 
-    /**
-     * Returns null if update was sucessful
-     *
-     * @param sql Query to run.
-     * @return Null if successful.
-     */
-    String updateDatabase(String sql) {
+    private String updateDatabase(String sql) {
         this.connectToDatabase();
 
         try {
@@ -284,9 +164,6 @@ class Database {
         }
     }
 
-    /*
-     *
-     */
     private boolean connectToDatabase() {
         if(isConnectionClosed()) {
             try {
@@ -304,9 +181,6 @@ class Database {
         }
     }
 
-    /*
-     *
-     */
     private boolean isConnectionClosed() {
         if (this.c != null) {
             //check if the connection is closed
