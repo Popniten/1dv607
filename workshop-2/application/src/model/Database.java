@@ -10,15 +10,47 @@ class Database {
     private Connection c = null;
     private Statement stmt = null;
 
-    public void insertMember(String fName, String lName, String ssn) {}
-    public void getMember(String ssn) {}
-    public void getAllMembers() {}
-    public void updateMember(String fName, String lName, String ssn, int id) {}
-    public void deleteMember(String ssn) {}
-    public void insertBoat(String name, String type, int ownerID) {}
-    public void getBoats() {}
-    public void updateBoat(String name, String type, int ownerID, int boatID) {}
-    public void deleteBoat(int boatID) {}
+    void insertMember(String fName, String lName, String ssn) {
+        String sql = "INSERT INTO Member (firstname, lastname, ssn) VALUES ('"
+                + fName
+                + "', '"
+                + lName
+                + "', '"
+                + ssn
+                +"')";
+        this.updateDatabase(sql);
+    }
+
+    void getMember(String ssn) {
+        String sql = "SELECT * FROM Member WHERE ssn = '" + ssn + "'";
+    }
+
+    ResultSet getAllMembers() {
+        String sql = "SELECT * FROM Member";
+        return this.selectFromDatabase(sql);
+    }
+
+    void updateMember(String fName, String lName, String ssn, int id) {
+        String sql = "";
+    }
+
+    void deleteMember(String ssn) {
+        String sql = "";
+    }
+
+    void insertBoat(String name, String type, int ownerID) {String sql = "";}
+
+    void getBoats() {
+        String sql = "";
+    }
+
+    void updateBoat(String name, String type, int ownerID, int boatID) {
+        String sql = "";
+    }
+
+    void deleteBoat(int boatID) {
+        String sql = "";
+    }
 
     /**
      * A method to get SQL queries to send to the database.

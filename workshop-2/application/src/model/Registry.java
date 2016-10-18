@@ -40,7 +40,8 @@ public class Registry {
      */
     public void addMember(Member mem) {
         try {
-            this.db.updateDatabase(this.db.getMemberQuery("insert", mem));
+            //this.db.updateDatabase(this.db.getMemberQuery("insert", mem));
+            this.db.insertMember(mem.getFirstname(), mem.getLastname(), mem.getSSN());
         } catch (Exception e) {
             throw e;
         }
@@ -130,7 +131,7 @@ public class Registry {
      *
      */
     private void fetchAllMembers() {
-        ResultSet result = this.db.selectFromDatabase(this.db.getMemberQuery());
+        ResultSet result = this.db.getAllMembers();
 
         this.saveFetchedMembers(result);
     }
