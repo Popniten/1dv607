@@ -34,7 +34,9 @@ Enjoy!
 
 ## Grade 2 - Final Submission
 
-We decided...
+We decided to update our Database model, as pointed out by one peer review. There was alot of duplicated SQL strings there, and the update also removed dependancies between `Database` and the `Member`and `Boat` models.
+
+We also updated the sequence diagrams to this new `Database` API.
 
 ### Diagrams
 
