@@ -5,7 +5,7 @@ import java.sql.*;
 /**
  * A class to handle the SQLite database.
  */
-class Database implements IStorage {
+class Database {
 
     private Connection c = null;
     private Statement stmt = null;
@@ -18,7 +18,7 @@ class Database implements IStorage {
      * @param lName Members last name.
      * @param ssn Members social security number.
      */
-    public void insertMember(String fName, String lName, String ssn) {
+    void insertMember(String fName, String lName, String ssn) {
         String sql = "INSERT INTO Member (firstname, lastname, ssn) VALUES ('"
                 + fName
                 + "', '"
@@ -36,7 +36,7 @@ class Database implements IStorage {
      * @param ssn The SSN of the member to fetch.
      * @return ResultSet.
      */
-    public ResultSet getMember(String ssn) {
+    ResultSet getMember(String ssn) {
         String sql = "SELECT * FROM Member WHERE ssn = '" + ssn + "'";
         return this.selectFromDatabase(sql);
     }
@@ -46,7 +46,7 @@ class Database implements IStorage {
      *
      * @return ResultSet of members.
      */
-    public ResultSet getAllMembers() {
+    ResultSet getAllMembers() {
         String sql = "SELECT * FROM Member";
         return this.selectFromDatabase(sql);
     }
@@ -58,7 +58,7 @@ class Database implements IStorage {
      * @param lName The members new last name.
      * @param ssn The SSN of the member to update.
      */
-    public void updateMember(String fName, String lName, String ssn) {
+    void updateMember(String fName, String lName, String ssn) {
         String sql = "UPDATE Member " +
                      "SET firstname = '" + fName + "', " +
                      "lastname = '" + lName + "' " +
@@ -71,7 +71,7 @@ class Database implements IStorage {
      *
      * @param ssn The SSN of the member to delete.
      */
-    public void deleteMember(String ssn) {
+    void deleteMember(String ssn) {
         String sql = "DELETE FROM Member WHERE ssn = '" + ssn + "'";
         this.updateDatabase(sql);
     }
@@ -84,7 +84,7 @@ class Database implements IStorage {
      * @param length Boats length.
      * @param ownerSSN Boat owners SSN.
      */
-    public void insertBoat(String name, String type, int length, String ownerSSN) {
+    void insertBoat(String name, String type, int length, String ownerSSN) {
         String sql = "INSERT INTO Boat (type, name, length, owner) VALUES "
                 + "('"
                 + type
@@ -104,7 +104,7 @@ class Database implements IStorage {
      * @param ownerSSN The member.
      * @return ResultSet of boats.
      */
-    public ResultSet getMembersBoats(String ownerSSN) {
+    ResultSet getMembersBoats(String ownerSSN) {
         String sql = "SELECT * FROM Boat WHERE owner = '" + ownerSSN + "'";
         return this.selectFromDatabase(sql);
     }
@@ -117,7 +117,7 @@ class Database implements IStorage {
      * @param length Boat length.
      * @param boatID Boats ID.
      */
-    public void updateBoat(String name, String type, int length, int boatID) {
+    void updateBoat(String name, String type, int length, int boatID) {
         String sql = "UPDATE Boat " +
                 "SET type = '" + type + "', " +
                 "name = '" + name + "', " +
@@ -131,7 +131,7 @@ class Database implements IStorage {
      *
      * @param boatID ID of the boat to delete.
      */
-    public void deleteBoat(int boatID) {
+    void deleteBoat(int boatID) {
         String sql = "DELETE FROM Boat WHERE id = '" + boatID + "'";
         this.updateDatabase(sql);
     }
