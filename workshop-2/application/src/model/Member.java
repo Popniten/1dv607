@@ -6,7 +6,6 @@ import java.util.ArrayList;
  * A class to represent a member.
  */
 public class Member {
-    //TODO: add validation to setters
     private String firstname;
     private String lastname;
     private String SSN;
@@ -21,8 +20,8 @@ public class Member {
      */
     public Member(String firstname, String lastname, String SSN) {
         this.boats = new ArrayList<>();
-        setFirstname(firstname);
-        setLastname(lastname);
+        this.setFirstname(firstname);
+        this.setLastname(lastname);
         setSSN(SSN);
     }
 

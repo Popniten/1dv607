@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * A registry to hold members and their boats.
  */
 public class Registry {
-    Database db;
+    private Database db;
     private ArrayList<Member> members;
 
     /**
@@ -19,11 +19,111 @@ public class Registry {
         members = new ArrayList<>();
     }
 
+    /**
+     * Get all members from Database.
+     *
+     * @return ArrayList of Members.
+     */
+    public ArrayList<Member> getMembers() {
+        this.fetchAllMembers();
+        ArrayList<Member> members = new ArrayList<>();
+        for(Member m : this.members) {
+            members.add(m.clone());
+        }
+        return members;
+    }
+
+    /**
+     * Add member to registry.
+     *
+     * @param mem Member to add.
+     */
+    public void addMember(Member mem) {
+        try {
+            this.db.insertMember(mem.getFirstname(), mem.getLastname(), mem.getSSN());
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    /**
+     * Update member in registry (and database).
+     *
+     * @param mem Member to update.
+     */
+    public void updateMember(Member mem) {
+        if (isMember(mem.getSSN())) {
+            try {
+                this.db.updateMember(mem.getFirstname(), mem.getLastname(), mem.getSSN());
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+    }
+
+    /**
+     * Remove member from registry.
+     *
+     * @param mem Member to remove.
+     */
+    public void removeMember(Member mem) {
+        if (isMember(mem.getSSN())) {
+            ArrayList<Boat> boats = mem.getBoats();
+            for (Boat b : boats) {
+                this.db.deleteBoat(b.getId());
+            }
+            this.db.deleteMember(mem.getSSN());
+        }
+    }
+
+    /**
+     * Returns a member if found, null if not
+     *
+     * @param ssn Member to get.
+     * @return Member|Null.
+     */
+    public Member getMember(String ssn) {
+        if (this.fetchMember(ssn)) {
+            return this.members.get(0);
+        }
+        return null;
+    }
+
+    /**
+     * Add a boat to a member.
+     *
+     * @param ownerSsn Member that owns the boat.
+     * @param boat Boat to add.
+     */
+    public void addBoat(String ownerSsn, Boat boat) {
+        if(this.fetchMember(ownerSsn)) {
+            this.db.insertBoat(boat.getName(), boat.getType().toString(), boat.getLength(), ownerSsn);
+        }
+    }
+
+    /**
+     * Update a boat.
+     *
+     * @param boat Boat to update.
+     */
+    public void updateBoat(Boat boat) {
+        this.db.updateBoat(boat.getName(), boat.getType().toString(), boat.getLength(), boat.getId());
+    }
+
+    /**
+     * Remove a boat.
+     *
+     * @param boat Boat to remove.
+     */
+    public void removeBoat(Boat boat) {
+        this.db.deleteBoat(boat.getId());
+    }
+
     /*
      *
      */
     private void fetchAllMembers() {
-        ResultSet result = this.db.selectFromDatabase(this.db.getMemberQuery());
+        ResultSet result = this.db.getAllMembers();
 
         this.saveFetchedMembers(result);
     }
@@ -32,7 +132,7 @@ public class Registry {
      *
      */
     private boolean fetchMember(String ssn) {
-        ResultSet result = this.db.selectFromDatabase(this.db.getMemberQuery(ssn));
+        ResultSet result = this.db.getMember(ssn);
         this.saveFetchedMembers(result);
 
         return isMember(ssn);
@@ -43,7 +143,7 @@ public class Registry {
      */
     private boolean isMember(String ssn) {
         boolean valid = false;
-        ResultSet result = this.db.selectFromDatabase(this.db.getMemberQuery(ssn));
+        ResultSet result = this.db.getMember(ssn);
         try {
             if (result.next()) {
                 valid = true;
@@ -85,7 +185,7 @@ public class Registry {
      */
     private void addMembersBoats(Member mem) {
         try {
-            ResultSet result = this.db.selectFromDatabase(this.db.getMemberBoatsQuery(mem));
+            ResultSet result = this.db.getMembersBoats(mem.getSSN());
 
             while(result.next()) {
                 Boat.BoatType type = Boat.BoatType.valueOf(result.getString("type"));
@@ -95,112 +195,5 @@ public class Registry {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Get all members from Database.
-     *
-     * @return ArrayList of Members.
-     */
-    public ArrayList<Member> getMembers() {
-        this.fetchAllMembers();
-        ArrayList<Member> members = new ArrayList<>();
-        for(Member m : this.members) {
-            members.add(m.clone());
-        }
-        return members;
-    }
-
-    /**
-     * Add member to registry.
-     *
-     * @param mem Member to add.
-     */
-    public void addMember(Member mem) {
-        try {
-            this.db.updateDatabase(this.db.getMemberQuery("insert", mem));
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-
-    /**
-     * Update member in registry (and database).
-     *
-     * @param mem Member to update.
-     */
-    public void updateMember(Member mem) {
-        if (isMember(mem.getSSN())) {
-            try {
-                this.db.updateDatabase(this.db.getMemberQuery("update", mem));
-            } catch (Exception e) {
-                throw e;
-            }
-        }
-    }
-
-    /**
-     * Remove member from registry.
-     *
-     * @param mem Member to remove.
-     * @return Null if unsuccessful.
-     */
-    public String removeMember(Member mem) {
-        if (isMember(mem.getSSN())) {
-            return this.db.updateDatabase(this.db.getMemberQuery("delete", mem));
-        }
-        else {
-            return null;
-        }
-    }
-
-    /**
-     * Returns a member if found, null if not
-     *
-     * @param ssn Member to get.
-     * @return Member|Null.
-     */
-    public Member getMember(String ssn) {
-        if (this.fetchMember(ssn)) {
-            return this.members.get(0);
-        }
-        return null;
-    }
-
-    /**
-     * Add a boat to a member.
-     *
-     * @param ownerSsn Member that owns the boat.
-     * @param boat Boat to add.
-     * @return String.
-     */
-    public String addBoat(String ownerSsn, Boat boat) {
-        if(this.fetchMember(ownerSsn)) {
-            return this.db.updateDatabase(this.db.getInsertBoatQuery(ownerSsn, boat));
-        }
-        else {
-            return "No member found with that SSN";
-        }
-
-    }
-
-    /**
-     * Update a boat.
-     *
-     * @param boat Boat to update.
-     * @return String.
-     */
-    public String updateBoat(Boat boat) {
-        return this.db.updateDatabase(this.db.getBoatQuery("update", boat));
-    }
-
-    /**
-     * Remove a boat.
-     *
-     * @param boat Boat to remove.
-     * @return String.
-     */
-    public String removeBoat(Boat boat) {
-        return this.db.updateDatabase(this.db.getBoatQuery("delete", boat));
     }
 }

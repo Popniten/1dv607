@@ -5,126 +5,138 @@ import java.sql.*;
 /**
  * A class to handle the SQLite database.
  */
-public class Database {
+class Database {
 
     private Connection c = null;
     private Statement stmt = null;
 
     /**
-     * A method to get SQL queries to send to the database.
+     * Takes information about a member and inserts
+     * it into the database.
      *
-     * @param command SQL command.
-     * @param mem Member to handle.
-     * @return SQL query.
+     * @param fName Members first name.
+     * @param lName Members last name.
+     * @param ssn Members social security number.
      */
-    String getMemberQuery(String command, Member mem) {
-        String sql = "";
-        switch(command) {
-            case "insert":
-                sql = "INSERT INTO Member (firstname, lastname, ssn) VALUES " +
-                        "('" + mem.getFirstname() + "', '" + mem.getLastname() + "', '" + mem.getSSN() + "')";
-                break;
-            case "update":
-                sql = "UPDATE Member " +
-                        "SET firstname = '" + mem.getFirstname() + "', " +
-                        "lastname = '" + mem.getLastname() + "' " +
-                        "WHERE ssn = '" + mem.getSSN() + "'";
-                break;
-            case "select":
-                sql = "SELECT * FROM Member WHERE ssn = '" + mem.getSSN() + "'";
-                break;
-            case "delete":
-                sql = "DELETE FROM Member WHERE ssn = '" + mem.getSSN() + "'";
-                break;
-            default:
-                break;
-        }
-        return sql;
+    void insertMember(String fName, String lName, String ssn) {
+        String sql = "INSERT INTO Member (firstname, lastname, ssn) VALUES ('"
+                + fName
+                + "', '"
+                + lName
+                + "', '"
+                + ssn
+                +"')";
+        this.updateDatabase(sql);
     }
 
     /**
-     * Select all members.
+     * Fetches a member from the database and returns
+     * it as a ResultSet.
      *
-     * @return Query.
+     * @param ssn The SSN of the member to fetch.
+     * @return ResultSet.
      */
-    String getMemberQuery() {
-        return "SELECT * FROM Member";
+    ResultSet getMember(String ssn) {
+        String sql = "SELECT * FROM Member WHERE ssn = '" + ssn + "'";
+        return this.selectFromDatabase(sql);
     }
 
     /**
-     * Select a specific member.
+     * Fetches all members in the database.
      *
-     * @param ssn Member to select.
-     * @return Query.
+     * @return ResultSet of members.
      */
-    String getMemberQuery(String ssn) {
-        return "SELECT * FROM Member WHERE ssn = '" + ssn + "'";
+    ResultSet getAllMembers() {
+        String sql = "SELECT * FROM Member";
+        return this.selectFromDatabase(sql);
     }
 
     /**
-     * Select boats from database.
+     * Updates a member in the database.
      *
-     * @param mem The members boats.
-     * @return Query.
+     * @param fName The members new first name.
+     * @param lName The members new last name.
+     * @param ssn The SSN of the member to update.
      */
-    String getMemberBoatsQuery(Member mem) {
-        return "SELECT * FROM Boat WHERE owner = '" + mem.getSSN() + "'";
+    void updateMember(String fName, String lName, String ssn) {
+        String sql = "UPDATE Member " +
+                     "SET firstname = '" + fName + "', " +
+                     "lastname = '" + lName + "' " +
+                     "WHERE ssn = '" + ssn + "'";
+        this.updateDatabase(sql);
     }
 
     /**
-     * Insert boat to database.
+     * Deletes a member from the database.
      *
-     * @param ownerSsn Owner ssn.
-     * @param boat Boat to insert.
-     * @return Query.
+     * @param ssn The SSN of the member to delete.
      */
-    String getInsertBoatQuery(String ownerSsn, Boat boat) {
-        return "INSERT INTO Boat (type, name, length, owner) VALUES " +
-                "('" + boat.getType() + "', '" + boat.getName() + "', '" +
-                boat.getLength() + "', '" + ownerSsn + "')";
+    void deleteMember(String ssn) {
+        String sql = "DELETE FROM Member WHERE ssn = '" + ssn + "'";
+        this.updateDatabase(sql);
     }
 
     /**
-     * Boat queries for database.
+     * Inserts a new boat into the database.
      *
-     * @param command SQL command.
-     * @param boat Boat
-     * @return Query.
+     * @param name Name of the boat.
+     * @param type Boat type.
+     * @param length Boats length.
+     * @param ownerSSN Boat owners SSN.
      */
-    String getBoatQuery(String command, Boat boat) {
-        String sql = "";
-        switch(command) {
-            case "insert":
-                sql = "INSERT INTO Boat (type, name, length) VALUES " +
-                        "('" + boat.getType() + "', '" + boat.getName() + "', '" +
-                            boat.getLength() + "')";
-                break;
-            case "update":
-                sql = "UPDATE Boat " +
-                        "SET type = '" + boat.getType() + "', " +
-                        "name = '" + boat.getName() + "', " +
-                        "length = '" + boat.getLength() + "' " +
-                        "WHERE id = '" + boat.getId() + "'";
-                break;
-            case "select":
-                sql = "SELECT * FROM Boat WHERE id = '" + boat.getId() + "'";
-                break;
-            case "delete":
-                sql = "DELETE FROM Boat WHERE id = '" + boat.getId() + "'";
-                break;
-            default:
-                break;
-        }
-        return sql;
+    void insertBoat(String name, String type, int length, String ownerSSN) {
+        String sql = "INSERT INTO Boat (type, name, length, owner) VALUES "
+                + "('"
+                + type
+                + "', '"
+                + name
+                + "', '"
+                + length
+                + "', '"
+                + ownerSSN
+                + "')";
+        this.updateDatabase(sql);
     }
 
     /**
-     * Returns ResultSet if success, null if not
+     * Returns a result set of a members boats.
      *
-     * @param sql Query to run in database.
-     * @return ResultSet|Null.
+     * @param ownerSSN The member.
+     * @return ResultSet of boats.
      */
-    ResultSet selectFromDatabase(String sql) {
+    ResultSet getMembersBoats(String ownerSSN) {
+        String sql = "SELECT * FROM Boat WHERE owner = '" + ownerSSN + "'";
+        return this.selectFromDatabase(sql);
+    }
+
+    /**
+     * Updates a boats information in the database.
+     *
+     * @param name Boats name.
+     * @param type Boat type.
+     * @param length Boat length.
+     * @param boatID Boats ID.
+     */
+    void updateBoat(String name, String type, int length, int boatID) {
+        String sql = "UPDATE Boat " +
+                "SET type = '" + type + "', " +
+                "name = '" + name + "', " +
+                "length = '" + length + "' " +
+                "WHERE id = '" + boatID + "'";
+        this.updateDatabase(sql);
+    }
+
+    /**
+     * Deletes a boat from the database.
+     *
+     * @param boatID ID of the boat to delete.
+     */
+    void deleteBoat(int boatID) {
+        String sql = "DELETE FROM Boat WHERE id = '" + boatID + "'";
+        this.updateDatabase(sql);
+    }
+
+    private ResultSet selectFromDatabase(String sql) {
         ResultSet result = null;
         this.connectToDatabase();
 
@@ -139,13 +151,7 @@ public class Database {
         return result;
     }
 
-    /**
-     * Returns null if update was sucessful
-     *
-     * @param sql Query to run.
-     * @return Null if successful.
-     */
-    String updateDatabase(String sql) {
+    private String updateDatabase(String sql) {
         this.connectToDatabase();
 
         try {
@@ -158,9 +164,6 @@ public class Database {
         }
     }
 
-    /*
-     *
-     */
     private boolean connectToDatabase() {
         if(isConnectionClosed()) {
             try {
@@ -178,9 +181,6 @@ public class Database {
         }
     }
 
-    /*
-     *
-     */
     private boolean isConnectionClosed() {
         if (this.c != null) {
             //check if the connection is closed
