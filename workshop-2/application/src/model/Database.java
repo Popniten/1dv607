@@ -66,11 +66,19 @@ class Database {
         this.updateDatabase(sql);
     }
 
+    /**
+     * Deletes a member from the database.
+     *
+     * @param ssn The SSN of the member to delete.
+     */
     void deleteMember(String ssn) {
-        String sql = "";
+        String sql = "DELETE FROM Member WHERE ssn = '" + ssn + "'";
+        this.updateDatabase(sql);
     }
 
-    void insertBoat(String name, String type, int ownerID) {String sql = "";}
+    void insertBoat(String name, String type, int ownerID) {
+        String sql = "";
+    }
 
     void getBoats() {
         String sql = "";
@@ -80,8 +88,14 @@ class Database {
         String sql = "";
     }
 
+    /**
+     * Deletes a boat from the database.
+     *
+     * @param boatID ID of the boat to delete.
+     */
     void deleteBoat(int boatID) {
-        String sql = "";
+        String sql = "DELETE FROM Boat WHERE id = '" + boatID + "'";
+        this.updateDatabase(sql);
     }
 
     /**

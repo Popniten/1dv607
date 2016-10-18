@@ -70,6 +70,10 @@ public class Registry {
      */
     public String removeMember(Member mem) {
         if (isMember(mem.getSSN())) {
+            ArrayList<Boat> boats = mem.getBoats();
+            for (Boat b : boats) {
+                this.db.deleteBoat(b.getId());
+            }
             return this.db.updateDatabase(this.db.getMemberQuery("delete", mem));
         }
         else {
