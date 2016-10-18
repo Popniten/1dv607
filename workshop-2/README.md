@@ -32,3 +32,20 @@ Enjoy!
 
 ![View Member](WS2-ViewMember.png)
 
+## Grade 2 - Final Submission
+
+We decided...
+
+### Diagrams
+
+![UML Class Diagram](WS2-ClassDiagram-FinalSubmission.png)
+
+#### Input Sequence diagrams - Register Member
+
+![Register Member](WS2-RegisterMemberFinal.png)
+
+#### Output Sequence diagrams - View Member
+
+![View Member](WS2-ViewMemberFinal.png)
+
+
