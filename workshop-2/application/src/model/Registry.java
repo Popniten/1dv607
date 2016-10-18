@@ -55,7 +55,7 @@ public class Registry {
     public void updateMember(Member mem) {
         if (isMember(mem.getSSN())) {
             try {
-                this.db.updateDatabase(this.db.getMemberQuery("update", mem));
+                this.db.updateMember(mem.getFirstname(), mem.getLastname(), mem.getSSN());
             } catch (Exception e) {
                 throw e;
             }
@@ -140,7 +140,7 @@ public class Registry {
      *
      */
     private boolean fetchMember(String ssn) {
-        ResultSet result = this.db.selectFromDatabase(this.db.getMemberQuery(ssn));
+        ResultSet result = this.db.getMember(ssn);
         this.saveFetchedMembers(result);
 
         return isMember(ssn);

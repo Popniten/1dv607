@@ -10,6 +10,14 @@ class Database {
     private Connection c = null;
     private Statement stmt = null;
 
+    /**
+     * Takes information about a member and inserts
+     * it into the database.
+     *
+     * @param fName Members first name.
+     * @param lName Members last name.
+     * @param ssn Members social security number.
+     */
     void insertMember(String fName, String lName, String ssn) {
         String sql = "INSERT INTO Member (firstname, lastname, ssn) VALUES ('"
                 + fName
@@ -21,17 +29,41 @@ class Database {
         this.updateDatabase(sql);
     }
 
-    void getMember(String ssn) {
+    /**
+     * Fetches a member from the database and returns
+     * it as a ResultSet.
+     *
+     * @param ssn The SSN of the member to fetch.
+     * @return ResultSet.
+     */
+    ResultSet getMember(String ssn) {
         String sql = "SELECT * FROM Member WHERE ssn = '" + ssn + "'";
+        return this.selectFromDatabase(sql);
     }
 
+    /**
+     * Fetches all members in the database.
+     *
+     * @return ResultSet of members.
+     */
     ResultSet getAllMembers() {
         String sql = "SELECT * FROM Member";
         return this.selectFromDatabase(sql);
     }
 
-    void updateMember(String fName, String lName, String ssn, int id) {
-        String sql = "";
+    /**
+     * Updates a member in the database.
+     *
+     * @param fName The members new first name.
+     * @param lName The members new last name.
+     * @param ssn The SSN of the member to update.
+     */
+    void updateMember(String fName, String lName, String ssn) {
+        String sql = "UPDATE Member " +
+                     "SET firstname = '" + fName + "', " +
+                     "lastname = '" + lName + "' " +
+                     "WHERE ssn = '" + ssn + "'";
+        this.updateDatabase(sql);
     }
 
     void deleteMember(String ssn) {
