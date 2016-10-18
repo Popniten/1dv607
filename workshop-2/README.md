@@ -1,5 +1,7 @@
 # Workshop 2 - Design
 
+By Pär Eriksson (pe222gq) and Oskar Emilsson (oe222ca).
+
 ## Instructions
 
 ### Project structure
@@ -34,11 +36,13 @@ Enjoy!
 
 ## Grade 2 - Final Submission
 
-We decided to update our Database model, as pointed out by one peer review. There was alot of duplicated SQL strings there, and the update also removed dependancies between `Database` and the `Member`and `Boat` models.
+We decided to update our Database model, as pointed out by one peer review. There was alot of duplicated SQL strings there, and the update also removed dependancies between `Database` and the `Member` and `Boat` models.
 
 We also updated the sequence diagrams to this new `Database` API.
 
 ### Diagrams
+
+#### UML class diagram
 
 ![UML Class Diagram](WS2-ClassDiagram-FinalSubmission.png)
 
