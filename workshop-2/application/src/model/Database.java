@@ -76,12 +76,37 @@ class Database {
         this.updateDatabase(sql);
     }
 
-    void insertBoat(String name, String type, int ownerID) {
-        String sql = "";
+    /**
+     * Inserts a new boat into the database.
+     *
+     * @param name Name of the boat.
+     * @param type Boat type.
+     * @param length Boats length.
+     * @param ownerSSN Boat owners SSN.
+     */
+    void insertBoat(String name, String type, int length, String ownerSSN) {
+        String sql = "INSERT INTO Boat (type, name, length, owner) VALUES "
+                + "('"
+                + type
+                + "', '"
+                + name
+                + "', '"
+                + length
+                + "', '"
+                + ownerSSN
+                + "')";
+        this.updateDatabase(sql);
     }
 
-    void getBoats() {
-        String sql = "";
+    /**
+     * Returns a result set of a members boats.
+     *
+     * @param ownerSSN The member.
+     * @return ResultSet of boats.
+     */
+    ResultSet getMembersBoats(String ownerSSN) {
+        String sql = "SELECT * FROM Boat WHERE owner = '" + ownerSSN + "'";
+        return this.selectFromDatabase(sql);
     }
 
     void updateBoat(String name, String type, int ownerID, int boatID) {

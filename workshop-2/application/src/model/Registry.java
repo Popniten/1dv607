@@ -40,7 +40,6 @@ public class Registry {
      */
     public void addMember(Member mem) {
         try {
-            //this.db.updateDatabase(this.db.getMemberQuery("insert", mem));
             this.db.insertMember(mem.getFirstname(), mem.getLastname(), mem.getSSN());
         } catch (Exception e) {
             throw e;
@@ -66,18 +65,14 @@ public class Registry {
      * Remove member from registry.
      *
      * @param mem Member to remove.
-     * @return Null if unsuccessful.
      */
-    public String removeMember(Member mem) {
+    public void removeMember(Member mem) {
         if (isMember(mem.getSSN())) {
             ArrayList<Boat> boats = mem.getBoats();
             for (Boat b : boats) {
                 this.db.deleteBoat(b.getId());
             }
-            return this.db.updateDatabase(this.db.getMemberQuery("delete", mem));
-        }
-        else {
-            return null;
+            this.db.deleteMember(mem.getSSN());
         }
     }
 
@@ -99,16 +94,11 @@ public class Registry {
      *
      * @param ownerSsn Member that owns the boat.
      * @param boat Boat to add.
-     * @return String.
      */
-    public String addBoat(String ownerSsn, Boat boat) {
+    public void addBoat(String ownerSsn, Boat boat) {
         if(this.fetchMember(ownerSsn)) {
-            return this.db.updateDatabase(this.db.getInsertBoatQuery(ownerSsn, boat));
+            this.db.insertBoat(boat.getName(), boat.getType().toString(), boat.getLength(), ownerSsn);
         }
-        else {
-            return "No member found with that SSN";
-        }
-
     }
 
     /**
@@ -197,7 +187,7 @@ public class Registry {
      */
     private void addMembersBoats(Member mem) {
         try {
-            ResultSet result = this.db.selectFromDatabase(this.db.getMemberBoatsQuery(mem));
+            ResultSet result = this.db.getMembersBoats(mem.getSSN());
 
             while(result.next()) {
                 Boat.BoatType type = Boat.BoatType.valueOf(result.getString("type"));
