@@ -8,7 +8,7 @@ Here is how you can run the game...
 
 ## Grade 2 - Submission 1
 
-Some text...
+Implementing dealers Stand functionality was very easy, thanks to the very clear sequence diagram.
 
 ### Diagrams
 
