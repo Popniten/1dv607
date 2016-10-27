@@ -21,6 +21,12 @@ public class Dealer extends Player {
     }    */
     }
 
+    private void DrawCardToHand(Player a_player) {
+        Card c = m_deck.GetCard();
+        c.Show(true);
+        a_player.DealCard(c);
+    }
+
     public boolean Stand() {
         if (m_deck != null) {
             for (Card c : this.GetHand()) {
@@ -28,10 +34,7 @@ public class Dealer extends Player {
             }
 
             while (m_hitRule.DoHit(this)) {
-                Card a_card = m_deck.GetCard();
-                a_card.Show(true);
-
-                this.DealCard(a_card);
+                DrawCardToHand(this);
             }
 
             return true;
@@ -51,10 +54,7 @@ public class Dealer extends Player {
 
     public boolean Hit(Player a_player) {
         if (m_deck != null && a_player.CalcScore() < g_maxScore && !IsGameOver()) {
-            Card c;
-            c = m_deck.GetCard();
-            c.Show(true);
-            a_player.DealCard(c);
+            DrawCardToHand(a_player);
 
             return true;
         }

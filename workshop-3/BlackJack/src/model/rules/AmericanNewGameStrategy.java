@@ -11,22 +11,22 @@ class AmericanNewGameStrategy implements INewGameStrategy {
     Card c;
 
     c = a_deck.GetCard();
-    c = new Card(Card.Color.Clubs, Card.Value.Ace);
+//    c = new Card(Card.Color.Clubs, Card.Value.Ace);
     c.Show(true);
     a_player.DealCard(c);
 
     c = a_deck.GetCard();
-    c = new Card(Card.Color.Clubs, Card.Value.Ace);
+//    c = new Card(Card.Color.Clubs, Card.Value.Ace);
     c.Show(true);
     a_dealer.DealCard(c);
 
     c = a_deck.GetCard();
-    c = new Card(Card.Color.Clubs, Card.Value.Eight);
+//    c = new Card(Card.Color.Clubs, Card.Value.Eight);
     c.Show(true);
     a_player.DealCard(c);
 
     c = a_deck.GetCard();
-    c = new Card(Card.Color.Clubs, Card.Value.Eight);
+//    c = new Card(Card.Color.Clubs, Card.Value.Eight);
     c.Show(false);
     a_dealer.DealCard(c);
 
