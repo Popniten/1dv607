@@ -1,6 +1,6 @@
-package BlackJack.model.rules;
+package model.rules;
 
-import BlackJack.model.Player;
+import model.Player;
 
 public interface IHitStrategy {
     boolean DoHit(Player a_dealer);

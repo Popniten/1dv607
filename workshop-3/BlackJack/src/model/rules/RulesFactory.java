@@ -1,4 +1,4 @@
-package BlackJack.model.rules;
+package model.rules;
 
 public class RulesFactory {
 

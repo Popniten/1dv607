@@ -1,9 +1,9 @@
-package BlackJack.model.rules;
+package model.rules;
 
-import BlackJack.model.Deck;
-import BlackJack.model.Dealer;
-import BlackJack.model.Player;
-import BlackJack.model.Card;  
+import model.Deck;
+import model.Dealer;
+import model.Player;
+import model.Card;
 
 class InternationalNewGameStrategy implements INewGameStrategy {
 
