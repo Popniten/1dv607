@@ -19,6 +19,23 @@ public class Dealer extends Player {
     }    */
     }
 
+    public boolean Stand() {
+        if (m_deck != null) {
+            for (Card c : this.GetHand()) {
+                c.Show(true);
+            }
+
+            while (m_hitRule.DoHit(this)) {
+                Card a_card = m_deck.GetCard();
+                a_card.Show(true);
+
+                this.DealCard(a_card);
+            }
+
+            return true;
+        }
+        return false;
+    }
 
     public boolean NewGame(Player a_player) {
         if (m_deck == null || IsGameOver()) {
