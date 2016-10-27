@@ -14,6 +14,8 @@ Implementing dealers Stand functionality was very easy, thanks to the very clear
 
 Here are the updated class diagram and sequence diagram.
 
+Soft 17 rules went well.
+
 #### UML Class Diagram
 
 #### Sequence Diagram - Stand

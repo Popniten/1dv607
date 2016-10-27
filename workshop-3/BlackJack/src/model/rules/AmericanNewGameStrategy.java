@@ -16,7 +16,7 @@ class AmericanNewGameStrategy implements INewGameStrategy {
 
     c = a_deck.GetCard();
     c.Show(true);
-    a_dealer.DealCard(c);
+    a_dealer.DealCard(new Card(Card.Color.Clubs, Card.Value.Ace));
 
     c = a_deck.GetCard();
     c.Show(true);
@@ -24,7 +24,7 @@ class AmericanNewGameStrategy implements INewGameStrategy {
 
     c = a_deck.GetCard();
     c.Show(false);
-    a_dealer.DealCard(c);
+    a_dealer.DealCard(new Card(Card.Color.Clubs, Card.Value.Six));
 
     return true;
   }
