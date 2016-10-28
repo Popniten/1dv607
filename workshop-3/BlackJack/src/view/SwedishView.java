@@ -2,6 +2,11 @@ package view;
 
 public class SwedishView implements IView
 {
+    private char charForNewGame = 'p';
+    private char charForHit = 'h';
+    private char charForStand = 's';
+    private char charForQuit = 'q';
+
     public void DisplayWelcomeMessage()
     {
 
@@ -9,7 +14,11 @@ public class SwedishView implements IView
 
         System.out.println("Hej Black Jack Världen");
         System.out.println("----------------------");
-        System.out.println("Skriv 'p' för att Spela, 'h' för nytt kort, 's' för att stanna 'q' för att avsluta\n");
+        System.out.println("Skriv '"
+                + charForNewGame + "' för att Spela, '"
+                + charForHit +"' för nytt kort, '"
+                + charForStand + "' för att stanna '"
+                + charForQuit +"' för att avsluta\n");
     }
 
     public int GetInput()
@@ -71,5 +80,15 @@ public class SwedishView implements IView
         }
         System.out.println("Poäng: " + a_score);
         System.out.println("");
+    }
+
+    public char GetInputFor(InputChoice choice) {
+        char c = 'x';
+        if (choice == InputChoice.NewGame) {c = charForNewGame;}
+        if (choice == InputChoice.Hit) {c = charForHit;}
+        if (choice == InputChoice.Stand) {c = charForStand;}
+        if (choice == InputChoice.Quit) {c = charForQuit;}
+
+        return c;
     }
 }

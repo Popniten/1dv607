@@ -2,12 +2,20 @@ package view;
 
 public class SimpleView implements IView
 {
+    private char charForNewGame = 'p';
+    private char charForHit = 'h';
+    private char charForStand = 's';
+    private char charForQuit = 'q';
 
     public void DisplayWelcomeMessage()
     {
         for(int i = 0; i < 50; i++) {System.out.print("\n");};
         System.out.println("Hello Black Jack World");
-        System.out.println("Type 'p' to Play, 'h' to Hit, 's' to Stand or 'q' to Quit\n");
+        System.out.println("Type '"
+                + charForNewGame + "' to Play, '"
+                + charForHit + "' to Hit, '"
+                + charForStand + "' to Stand or '"
+                + charForQuit + "' to Quit\n");
     }
 
     public int GetInput()
@@ -62,5 +70,15 @@ public class SimpleView implements IView
             System.out.println("You Won!");
         }
 
+    }
+
+    public char GetInputFor(InputChoice choice) {
+        char c = 'x';
+        if (choice == InputChoice.NewGame) {c = charForNewGame;}
+        if (choice == InputChoice.Hit) {c = charForHit;}
+        if (choice == InputChoice.Stand) {c = charForStand;}
+        if (choice == InputChoice.Quit) {c = charForQuit;}
+
+        return c;
     }
 }
