@@ -1,16 +1,25 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Game {
 
     private Dealer m_dealer;
     private Player m_player;
+    private ArrayList<ICardDealtObserver> m_subscribers;
 
     public Game()
     {
+        m_subscribers = new ArrayList<>();
         m_dealer = new Dealer(new model.rules.RulesFactory());
         m_player = new Player();
+        m_dealer.AddSubscribeList(m_subscribers);
+        m_player.AddSubscribeList(m_subscribers);
     }
 
+    public void AddSubscriber(ICardDealtObserver a_sub) {
+        m_subscribers.add(a_sub);
+    }
 
     public boolean IsGameOver()
     {
@@ -56,6 +65,5 @@ public class Game {
     {
         return m_player.CalcScore();
     }
-
 
 }

@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.LinkedList;
 
@@ -7,17 +8,23 @@ public class Player {
 
     private List<Card> m_hand;
     protected final int g_maxScore = 21;
+    private ArrayList<ICardDealtObserver> m_subscribers;
 
     public Player()
     {
-
         m_hand = new LinkedList<Card>();
-        System.out.println("Hello List World");
+    }
+
+    public void AddSubscribeList(ArrayList<ICardDealtObserver> list) {
+        m_subscribers = list;
     }
 
     public void DealCard(Card a_addToHand)
     {
         m_hand.add(a_addToHand);
+        for (ICardDealtObserver o : m_subscribers) {
+            o.CardDealt();
+        }
     }
 
     public Iterable<Card> GetHand()
