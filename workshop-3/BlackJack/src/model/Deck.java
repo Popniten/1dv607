@@ -32,11 +32,6 @@ public class Deck {
         return c;
     }
 
-    public Iterable<Card> GetCards()
-    {
-        return m_cards;
-    }
-
     private void Shuffle()
     {
         for (int i = 0; i < 1017; i++)

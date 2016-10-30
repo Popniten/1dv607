@@ -10,15 +10,9 @@ public class Dealer extends Player {
     private IWinStrategy m_winRule;
 
     public Dealer(RulesFactory a_rulesFactory) {
-
         m_newGameRule = a_rulesFactory.GetNewGameRule();
         m_hitRule = a_rulesFactory.GetHitRule();
         m_winRule = a_rulesFactory.GetNewWinRule();
-
-    /*for(Card c : m_deck.GetCards()) {
-      c.Show(true);
-      System.out.println("" + c.GetValue() + " of " + c.GetColor());
-    }    */
     }
 
     private void DrawCardToHand(Player a_player) {
