@@ -15,20 +15,18 @@ public class Dealer extends Player {
         m_winRule = a_rulesFactory.GetNewWinRule();
     }
 
-    private void DrawCardToHand(Player a_player) {
+    public void DrawCardToHand(Player a_player, boolean show) {
         Card c = m_deck.GetCard();
-        c.Show(true);
+        c.Show(show);
         a_player.DealCard(c);
     }
 
     public boolean Stand() {
         if (m_deck != null) {
-            for (Card c : this.GetHand()) {
-                c.Show(true);
-            }
+            this.ShowHand();
 
             while (m_hitRule.DoHit(this)) {
-                DrawCardToHand(this);
+                DrawCardToHand(this, true);
             }
 
             return true;
@@ -48,7 +46,7 @@ public class Dealer extends Player {
 
     public boolean Hit(Player a_player) {
         if (m_deck != null && a_player.CalcScore() < g_maxScore && !IsGameOver()) {
-            DrawCardToHand(a_player);
+            DrawCardToHand(a_player, true);
 
             return true;
         }

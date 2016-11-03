@@ -8,15 +8,15 @@ public class Player {
 
     private List<Card> m_hand;
     protected final int g_maxScore = 21;
-    private ArrayList<ICardDealtObserver> m_subscribers;
+    private ArrayList<ICardDealtObserver> m_subscribers = new ArrayList<>();
 
     public Player()
     {
         m_hand = new LinkedList<Card>();
     }
 
-    public void AddSubscribeList(ArrayList<ICardDealtObserver> list) {
-        m_subscribers = list;
+    public void AddSubscribeList(ICardDealtObserver obs) {
+        m_subscribers.add(obs);
     }
 
     public void DealCard(Card a_addToHand)
